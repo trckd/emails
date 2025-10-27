@@ -208,4 +208,4 @@ This package is part of the Tracked Training Platform ecosystem. For issues or f
 ## Links
 
 - [React Email Documentation](https://react.email/)
-- [Tracked Training Platform](https://tracked.com/)
+- [Tracked Training Platform](https://tracked.gg/)
