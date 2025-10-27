@@ -71,7 +71,8 @@ describe('email-validation', () => {
 
     it('should handle edge cases', () => {
       expect(shouldSendEmailTo('   ')).toBe(false);
-      expect(shouldSendEmailTo('valid@email.com ')).toBe(true); // trailing space in string is allowed
+      expect(shouldSendEmailTo('valid@email.com ')).toBe(false); // trailing space fails regex
+      expect(shouldSendEmailTo('valid@email.com')).toBe(true); // properly formatted email works
     });
   });
 });
