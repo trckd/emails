@@ -1,0 +1,6 @@
+dist
+node_modules
+.react-email
+coverage
+*.log
+.DS_Store

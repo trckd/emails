@@ -1,0 +1,77 @@
+{
+  "name": "@tracked/emails",
+  "version": "0.1.0",
+  "description": "Email templates for Tracked Training Platform",
+  "author": "Tracked Training Platform Inc.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./emails/*": "./dist/emails/*.js"
+  },
+  "files": [
+    "dist/**",
+    "src/**",
+    "static/**",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "rm -rf ./dist && tsc",
+    "dev:email": "email dev",
+    "export": "email export",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "clean": "rm -rf dist node_modules .turbo"
+  },
+  "dependencies": {
+    "@react-email/components": "^0.5.7",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-email": "^4.3.2"
+  },
+  "devDependencies": {
+    "@react-email/preview-server": "latest",
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "@vitest/coverage-v8": "^2.1.8",
+    "dotenv-cli": "^7.4.2",
+    "eslint": "^9.17.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.8.3",
+    "vitest": "^2.1.8"
+  },
+  "keywords": [
+    "email",
+    "react-email",
+    "templates",
+    "tracked"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tracked/emails"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
