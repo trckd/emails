@@ -56,7 +56,7 @@ interface PreviousMetrics {
 }
 
 interface MonthlyReportEmailProps {
-  metrics: MonthlyMetrics;
+  metrics?: MonthlyMetrics;
   previousMetrics?: PreviousMetrics | null;
   websiteUrl?: string;
 }
@@ -78,9 +78,46 @@ function getMonthName(reportMonth: string): string {
   return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 }
 
+const defaultMetrics: MonthlyMetrics = {
+  accountId: 1,
+  email: "user@example.com",
+  reportMonth: "2025-11-01",
+  avgStepCount: 8547,
+  avgBodyweight: 175.3,
+  bodyweightChange: -2.1,
+  avgSessionsPerWeek: 4.2,
+  totalSetsTracked: 432,
+  totalSessionsTracked: 18,
+  topMuscleGroups: [
+    { muscleGroupId: "1", name: "Chest", sets: 89 },
+    { muscleGroupId: "2", name: "Back", sets: 76 },
+    { muscleGroupId: "3", name: "Legs", sets: 65 },
+    { muscleGroupId: "4", name: "Shoulders", sets: 54 },
+    { muscleGroupId: "5", name: "Arms", sets: 43 },
+  ],
+  avgReadinessEnergy: 7.8,
+  avgReadinessMood: 8.2,
+  avgReadinessStress: 4.3,
+  avgReadinessSoreness: 5.6,
+  avgReadinessSleep: 7.1,
+  avgSessionSatisfaction: 8.4,
+  avgSessionProgress: 7.9,
+  avgSessionMotivation: 8.1,
+  avgSessionEnjoyment: 8.7,
+};
+
+const defaultPreviousMetrics: PreviousMetrics = {
+  avgStepCount: 7892,
+  avgBodyweight: 177.4,
+  bodyweightChange: 0.5,
+  avgSessionsPerWeek: 3.8,
+  totalSetsTracked: 389,
+  totalSessionsTracked: 16,
+};
+
 export const MonthlyReportEmail = ({
-  metrics,
-  previousMetrics = null,
+  metrics = defaultMetrics,
+  previousMetrics = defaultPreviousMetrics,
   websiteUrl = "https://tracked.gg",
 }: MonthlyReportEmailProps) => {
   const monthName = getMonthName(metrics.reportMonth);
@@ -282,7 +319,7 @@ export const MonthlyReportEmail = ({
                           ...listItem,
                           borderBottom:
                             idx < metrics.topMuscleGroups!.length - 1
-                              ? "1px solid #e5e7eb"
+                              ? "1px solid #334155"
                               : "none",
                         }}
                       >
@@ -425,20 +462,20 @@ export const MonthlyReportEmail = ({
 
 // Styles
 const main = {
-  backgroundColor: "#f3f4f6",
+  backgroundColor: "#020617", // slate-950
   fontFamily:
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
 };
 
 const container = {
+  backgroundColor: "#020617", // slate-950
   margin: "0 auto",
   padding: "20px 0 48px",
-  maxWidth: "600px",
+  marginBottom: "64px",
+  borderRadius: "8px",
 };
 
 const box = {
-  backgroundColor: "#ffffff",
-  borderRadius: "8px",
   padding: "0 24px 24px 24px",
 };
 
@@ -447,7 +484,7 @@ const logo = {
   fontWeight: "900",
   fontFamily:
     "Raleway, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-  color: "#020617",
+  color: "#ffffff",
   margin: "0",
   lineHeight: "32px",
   letterSpacing: "0.5px",
@@ -475,8 +512,9 @@ const headerSubtitle = {
 };
 
 const hr = {
-  borderColor: "#e5e7eb",
-  margin: "20px 0",
+  borderColor: "#4ade80", // green-400
+  margin: "24px 0",
+  borderWidth: "1px",
 };
 
 const sectionContainer = {
@@ -484,33 +522,33 @@ const sectionContainer = {
 };
 
 const sectionHeading = {
-  color: "#1f2937",
+  color: "#ffffff",
   fontSize: "20px",
   margin: "0 0 20px 0",
   fontWeight: "600",
 };
 
 const metricBox = {
-  backgroundColor: "#f9fafb",
+  backgroundColor: "#1e293b", // slate-800
   padding: "15px",
   borderRadius: "8px",
 };
 
 const metricLabel = {
-  color: "#6b7280",
+  color: "#94a3b8", // slate-400
   fontSize: "14px",
   marginBottom: "5px",
 };
 
 const metricValue = {
-  color: "#1f2937",
+  color: "#ffffff",
   fontSize: "24px",
   fontWeight: "700",
   margin: "0",
 };
 
 const metricValueSmall = {
-  color: "#1f2937",
+  color: "#ffffff",
   fontSize: "20px",
   fontWeight: "700",
   margin: "0",
@@ -538,7 +576,7 @@ const changeIndicatorNeutral = {
 };
 
 const listBox = {
-  backgroundColor: "#f9fafb",
+  backgroundColor: "#1e293b", // slate-800
   borderRadius: "8px",
   overflow: "hidden",
 };
@@ -548,14 +586,14 @@ const listItem = {
 };
 
 const listItemName = {
-  color: "#1f2937",
+  color: "#ffffff",
   fontSize: "16px",
   fontWeight: "600",
   margin: "0",
 };
 
 const listItemValue = {
-  color: "#6b7280",
+  color: "#e2e8f0", // slate-200
   fontSize: "16px",
   margin: "0",
 };
@@ -565,13 +603,13 @@ const insightRow = {
 };
 
 const insightLabel = {
-  color: "#6b7280",
+  color: "#94a3b8", // slate-400
   fontSize: "14px",
   margin: "0",
 };
 
 const insightValue = {
-  color: "#1f2937",
+  color: "#ffffff",
   fontSize: "16px",
   fontWeight: "600",
   margin: "0",
@@ -580,25 +618,25 @@ const insightValue = {
 const footerMessageBox = {
   marginTop: "20px",
   padding: "20px",
-  backgroundColor: "#f9fafb",
+  backgroundColor: "#1e293b", // slate-800
   borderRadius: "8px",
   textAlign: "center" as const,
 };
 
 const footerMessage = {
-  color: "#6b7280",
+  color: "#e2e8f0", // slate-200
   fontSize: "14px",
   margin: "0",
 };
 
 const footerMessageSmall = {
-  color: "#6b7280",
+  color: "#94a3b8", // slate-400
   fontSize: "12px",
   margin: "15px 0 0 0",
 };
 
 const footer = {
-  color: "#9ca3af",
+  color: "#94a3b8", // slate-400
   fontSize: "12px",
   lineHeight: "16px",
   textAlign: "center" as const,

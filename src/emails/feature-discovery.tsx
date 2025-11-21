@@ -15,22 +15,27 @@ import {
 } from "@react-email/components";
 
 interface FeatureDiscoveryEmailProps {
-  userName: string;
-  featureName: string;
-  featureDescription: string;
-  featureBenefits: string[];
-  featureUrl: string;
-  websiteUrl: string;
+  userName?: string;
+  featureName?: string;
+  featureDescription?: string;
+  featureBenefits?: string[];
+  featureUrl?: string;
+  websiteUrl?: string;
 }
 
 const baseUrl = "https://tracked.gg/android-chrome-192x192.png";
 
 export const FeatureDiscoveryEmail = ({
-  userName,
-  featureName,
-  featureDescription,
-  featureBenefits,
-  featureUrl,
+  userName = "Alex",
+  featureName = "Progress Photos",
+  featureDescription = "Track your transformation visually with our new Progress Photos feature. Take photos, compare side-by-side, and see your hard work paying off over time.",
+  featureBenefits = [
+    "Compare photos side-by-side to see your progress",
+    "Automatic privacy controls - your photos are only visible to you",
+    "Set reminders to take consistent progress photos",
+    "Track multiple angles and body positions",
+  ],
+  featureUrl = "https://tracked.gg/progress-photos",
   websiteUrl = "https://tracked.gg",
 }: FeatureDiscoveryEmailProps) => {
   return (
