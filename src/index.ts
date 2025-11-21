@@ -6,6 +6,7 @@ import { DirectMessageEmail } from "./emails/direct-message.js";
 import { FeatureDiscoveryEmail } from "./emails/feature-discovery.js";
 import { FirstWorkoutAssignedEmail } from "./emails/first-workout-assigned.js";
 import { FirstWorkoutCompletedEmail } from "./emails/first-workout-completed.js";
+import { MonthlyReportEmail } from "./emails/monthly-report.js";
 import { NewFollowerEmail } from "./emails/new-follower.js";
 import { SubscriptionCanceledEmail } from "./emails/subscription-canceled.js";
 import { SupportEmail } from "./emails/support-email.js";
@@ -36,6 +37,7 @@ export {
   FeatureDiscoveryEmail,
   FirstWorkoutAssignedEmail,
   FirstWorkoutCompletedEmail,
+  MonthlyReportEmail,
   NewFollowerEmail,
   SubscriptionCanceledEmail,
   SupportEmail,

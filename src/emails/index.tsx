@@ -4,3 +4,4 @@ export * from "./tracked-magic-link-activate";
 export * from "./team-invite";
 export * from "./coach-invite";
 export * from "./team-member-removed-email";
+export * from "./monthly-report";
