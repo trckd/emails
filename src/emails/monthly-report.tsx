@@ -163,47 +163,44 @@ export const MonthlyReportEmail = ({
         <Container style={container}>
           <Section style={box}>
             {/* Header */}
-            <Row style={{ marginBottom: "8px" }}>
-              <Column style={{ width: "auto", verticalAlign: "middle" }}>
-                <Img src={`${baseUrl}`} width="28" height="28" alt="Tracked" />
-              </Column>
-              <Column
-                style={{
-                  width: "auto",
-                  verticalAlign: "middle",
-                  paddingLeft: "4px",
-                }}
-              >
-                <Text style={logo}>TRACKED</Text>
-              </Column>
-            </Row>
+            <table style={{ marginBottom: "8px" }}>
+              <tr>
+                <td style={{ verticalAlign: "middle", paddingRight: "8px" }}>
+                  <Img src={`${baseUrl}`} width="28" height="28" alt="Tracked" />
+                </td>
+                <td style={{ verticalAlign: "middle" }}>
+                  <Text style={logo}>TRACKED</Text>
+                </td>
+              </tr>
+            </table>
 
-            {/* Purple Gradient Section */}
+            {/* Green Section */}
             <Section style={headerSection}>
               <Text style={headerTitle}>Your {monthName} Training Report</Text>
-              <Text style={headerSubtitle}>
-                Your monthly fitness journey at a glance
-              </Text>
             </Section>
 
             <Hr style={hr} />
 
             {/* Activity Overview */}
             <Section style={sectionContainer}>
-              <Text style={sectionHeading}>📊 Activity Overview</Text>
+              <Text style={sectionHeading}>Activity Overview</Text>
               <Section style={metricBox}>
                 <Text style={metricLabel}>Average Daily Steps</Text>
-                <Row>
-                  <Column>
-                    <Text style={metricValue}>
-                      {formatNumber(metrics.avgStepCount)}
-                    </Text>
-                  </Column>
-                  {getChangeIndicator(
-                    metrics.avgStepCount,
-                    previousMetrics?.avgStepCount || null,
-                  )}
-                </Row>
+                <table>
+                  <tr>
+                    <td style={{ verticalAlign: "middle" }}>
+                      <Text style={metricValue}>
+                        {formatNumber(metrics.avgStepCount)}
+                      </Text>
+                    </td>
+                    <td style={{ verticalAlign: "middle", paddingLeft: "8px" }}>
+                      {getChangeIndicator(
+                        metrics.avgStepCount,
+                        previousMetrics?.avgStepCount || null,
+                      )}
+                    </td>
+                  </tr>
+                </table>
               </Section>
             </Section>
 
@@ -212,22 +209,26 @@ export const MonthlyReportEmail = ({
               <>
                 <Hr style={hr} />
                 <Section style={sectionContainer}>
-                  <Text style={sectionHeading}>⚖️ Bodyweight Trends</Text>
+                  <Text style={sectionHeading}>Bodyweight Trends</Text>
                   <Row>
                     <Column style={{ width: "48%" }}>
                       <Section style={metricBox}>
                         <Text style={metricLabel}>Average Bodyweight</Text>
-                        <Row>
-                          <Column>
-                            <Text style={metricValueSmall}>
-                              {formatDecimal(metrics.avgBodyweight, 1)} lbs
-                            </Text>
-                          </Column>
-                          {getChangeIndicator(
-                            metrics.avgBodyweight,
-                            previousMetrics?.avgBodyweight || null,
-                          )}
-                        </Row>
+                        <table>
+                          <tr>
+                            <td style={{ verticalAlign: "middle" }}>
+                              <Text style={metricValueSmall}>
+                                {formatDecimal(metrics.avgBodyweight, 1)} lbs
+                              </Text>
+                            </td>
+                            <td style={{ verticalAlign: "middle", paddingLeft: "8px" }}>
+                              {getChangeIndicator(
+                                metrics.avgBodyweight,
+                                previousMetrics?.avgBodyweight || null,
+                              )}
+                            </td>
+                          </tr>
+                        </table>
                       </Section>
                     </Column>
                     <Column style={{ width: "4%" }} />
@@ -251,55 +252,67 @@ export const MonthlyReportEmail = ({
             {/* Training Summary */}
             <Hr style={hr} />
             <Section style={sectionContainer}>
-              <Text style={sectionHeading}>💪 Training Summary</Text>
+              <Text style={sectionHeading}>Training Summary</Text>
               <Row>
                 <Column style={{ width: "48%" }}>
                   <Section style={metricBox}>
                     <Text style={metricLabel}>Sessions Per Week</Text>
-                    <Row>
-                      <Column>
-                        <Text style={metricValueSmall}>
-                          {formatDecimal(metrics.avgSessionsPerWeek, 1)}
-                        </Text>
-                      </Column>
-                      {getChangeIndicator(
-                        metrics.avgSessionsPerWeek,
-                        previousMetrics?.avgSessionsPerWeek || null,
-                      )}
-                    </Row>
+                    <table>
+                      <tr>
+                        <td style={{ verticalAlign: "middle" }}>
+                          <Text style={metricValueSmall}>
+                            {formatDecimal(metrics.avgSessionsPerWeek, 1)}
+                          </Text>
+                        </td>
+                        <td style={{ verticalAlign: "middle", paddingLeft: "8px" }}>
+                          {getChangeIndicator(
+                            metrics.avgSessionsPerWeek,
+                            previousMetrics?.avgSessionsPerWeek || null,
+                          )}
+                        </td>
+                      </tr>
+                    </table>
                   </Section>
                 </Column>
                 <Column style={{ width: "4%" }} />
                 <Column style={{ width: "48%" }}>
                   <Section style={metricBox}>
                     <Text style={metricLabel}>Total Sessions</Text>
-                    <Row>
-                      <Column>
-                        <Text style={metricValueSmall}>
-                          {formatNumber(metrics.totalSessionsTracked)}
-                        </Text>
-                      </Column>
-                      {getChangeIndicator(
-                        metrics.totalSessionsTracked,
-                        previousMetrics?.totalSessionsTracked || null,
-                      )}
-                    </Row>
+                    <table>
+                      <tr>
+                        <td style={{ verticalAlign: "middle" }}>
+                          <Text style={metricValueSmall}>
+                            {formatNumber(metrics.totalSessionsTracked)}
+                          </Text>
+                        </td>
+                        <td style={{ verticalAlign: "middle", paddingLeft: "8px" }}>
+                          {getChangeIndicator(
+                            metrics.totalSessionsTracked,
+                            previousMetrics?.totalSessionsTracked || null,
+                          )}
+                        </td>
+                      </tr>
+                    </table>
                   </Section>
                 </Column>
               </Row>
               <Section style={{ ...metricBox, marginTop: "10px" }}>
                 <Text style={metricLabel}>Total Sets Tracked</Text>
-                <Row>
-                  <Column>
-                    <Text style={metricValue}>
-                      {formatNumber(metrics.totalSetsTracked)}
-                    </Text>
-                  </Column>
-                  {getChangeIndicator(
-                    metrics.totalSetsTracked,
-                    previousMetrics?.totalSetsTracked || null,
-                  )}
-                </Row>
+                <table>
+                  <tr>
+                    <td style={{ verticalAlign: "middle" }}>
+                      <Text style={metricValue}>
+                        {formatNumber(metrics.totalSetsTracked)}
+                      </Text>
+                    </td>
+                    <td style={{ verticalAlign: "middle", paddingLeft: "8px" }}>
+                      {getChangeIndicator(
+                        metrics.totalSetsTracked,
+                        previousMetrics?.totalSetsTracked || null,
+                      )}
+                    </td>
+                  </tr>
+                </table>
               </Section>
             </Section>
 
@@ -309,7 +322,7 @@ export const MonthlyReportEmail = ({
                 <Hr style={hr} />
                 <Section style={sectionContainer}>
                   <Text style={sectionHeading}>
-                    🎯 Top 5 Prioritized Muscle Groups
+                    Top 5 Prioritized Muscle Groups
                   </Text>
                   <Section style={listBox}>
                     {metrics.topMuscleGroups.map((mg, idx) => (
@@ -319,7 +332,7 @@ export const MonthlyReportEmail = ({
                           ...listItem,
                           borderBottom:
                             idx < metrics.topMuscleGroups!.length - 1
-                              ? "1px solid #334155"
+                              ? "1px solid #0f172a"
                               : "none",
                         }}
                       >
@@ -345,7 +358,7 @@ export const MonthlyReportEmail = ({
               <>
                 <Hr style={hr} />
                 <Section style={sectionContainer}>
-                  <Text style={sectionHeading}>📈 Session Insights</Text>
+                  <Text style={sectionHeading}>Session Insights</Text>
                   <Section style={listBox}>
                     {metrics.avgReadinessEnergy && (
                       <Row style={insightRow}>
@@ -408,16 +421,10 @@ export const MonthlyReportEmail = ({
 
             {/* Footer Message */}
             <Hr style={hr} />
-            <Section style={footerMessageBox}>
-              <Text style={footerMessage}>
-                Keep up the great work! Every rep, every session, every step
-                counts towards your goals.
-              </Text>
-              <Text style={footerMessageSmall}>
-                You can manage your email preferences in the Tracked app
-                settings.
-              </Text>
-            </Section>
+            <Text style={footerMessageSmall}>
+              You can manage your email preferences in the Tracked app
+              settings.
+            </Text>
 
             <Hr style={hr} />
 
@@ -427,7 +434,7 @@ export const MonthlyReportEmail = ({
               Street, Vancouver, BC
             </Text>
 
-            <Container>
+            <Section style={{ textAlign: "center" }}>
               <Link
                 href={`${websiteUrl}/terms`}
                 style={{ ...footer, paddingRight: 10 }}
@@ -444,11 +451,11 @@ export const MonthlyReportEmail = ({
               <Link style={{ ...footer, paddingRight: 10 }}> | </Link>
               <Link
                 href={`${websiteUrl}/support`}
-                style={{ ...footer, paddingRight: 10 }}
+                style={footer}
               >
                 Support
               </Link>
-            </Container>
+            </Section>
 
             <Text style={footer}>
               This is a service notification by the Tracked Training Platform.
@@ -476,7 +483,7 @@ const container = {
 };
 
 const box = {
-  padding: "0 24px 24px 24px",
+  padding: "0 12px 24px 12px",
 };
 
 const logo = {
@@ -491,28 +498,22 @@ const logo = {
 };
 
 const headerSection = {
-  background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-  padding: "40px 20px",
+  backgroundColor: "#4ade80", // green-400
+  padding: "10px 20px",
   textAlign: "center" as const,
   borderRadius: "8px",
   margin: "20px 0",
 };
 
 const headerTitle = {
-  color: "#ffffff",
+  color: "#020617", // slate-950
   margin: "0",
-  fontSize: "28px",
+  fontSize: "20px",
   fontWeight: "700",
 };
 
-const headerSubtitle = {
-  color: "#e9d5ff",
-  margin: "10px 0 0 0",
-  fontSize: "16px",
-};
-
 const hr = {
-  borderColor: "#4ade80", // green-400
+  borderColor: "#0f172a", // slate-900
   margin: "24px 0",
   borderWidth: "1px",
 };
@@ -522,22 +523,25 @@ const sectionContainer = {
 };
 
 const sectionHeading = {
-  color: "#ffffff",
+  color: "#ffffff", // white
   fontSize: "20px",
-  margin: "0 0 20px 0",
+  margin: "0 0 10px 0",
   fontWeight: "600",
+  textTransform: "uppercase" as const,
+  letterSpacing: "1px",
 };
 
 const metricBox = {
-  backgroundColor: "#1e293b", // slate-800
-  padding: "15px",
+  backgroundColor: "rgba(15, 23, 42, 0.5)", // slate-900/50
+  padding: "5px 15px 15px 15px",
   borderRadius: "8px",
+  border: "1px solid #1e293b", // slate-800
 };
 
 const metricLabel = {
   color: "#94a3b8", // slate-400
   fontSize: "14px",
-  marginBottom: "5px",
+  marginBottom: "2px",
 };
 
 const metricValue = {
@@ -555,30 +559,31 @@ const metricValueSmall = {
 };
 
 const changeIndicatorPositive = {
-  color: "#10b981",
+  color: "#4ade80", // green-400
   fontSize: "14px",
-  marginLeft: "8px",
-  display: "inline",
+  margin: "0",
+  verticalAlign: "middle" as const,
 };
 
 const changeIndicatorNegative = {
-  color: "#ef4444",
+  color: "#f87171", // red-400
   fontSize: "14px",
-  marginLeft: "8px",
-  display: "inline",
+  margin: "0",
+  verticalAlign: "middle" as const,
 };
 
 const changeIndicatorNeutral = {
   color: "#6b7280",
   fontSize: "14px",
-  marginLeft: "8px",
-  display: "inline",
+  margin: "0",
+  verticalAlign: "middle" as const,
 };
 
 const listBox = {
-  backgroundColor: "#1e293b", // slate-800
+  backgroundColor: "rgba(15, 23, 42, 0.5)", // slate-900/50
   borderRadius: "8px",
   overflow: "hidden",
+  border: "1px solid #1e293b", // slate-800
 };
 
 const listItem = {
@@ -593,8 +598,9 @@ const listItemName = {
 };
 
 const listItemValue = {
-  color: "#e2e8f0", // slate-200
+  color: "#4ade80", // green-400
   fontSize: "16px",
+  fontWeight: "600",
   margin: "0",
 };
 
@@ -609,23 +615,9 @@ const insightLabel = {
 };
 
 const insightValue = {
-  color: "#ffffff",
+  color: "#4ade80", // green-400
   fontSize: "16px",
   fontWeight: "600",
-  margin: "0",
-};
-
-const footerMessageBox = {
-  marginTop: "20px",
-  padding: "20px",
-  backgroundColor: "#1e293b", // slate-800
-  borderRadius: "8px",
-  textAlign: "center" as const,
-};
-
-const footerMessage = {
-  color: "#e2e8f0", // slate-200
-  fontSize: "14px",
   margin: "0",
 };
 
