@@ -28,11 +28,11 @@ export const InactiveReengagementEmail = ({
 }: InactiveReengagementEmailProps) => {
   const getMessage = () => {
     if (daysInactive >= 30) {
-      return "It's been a while! Your fitness journey is waiting for you.";
+      return "It's been a while! We're here ready to help you standardize your training.";
     } else if (daysInactive >= 14) {
-      return "We noticed you've been away. Ready to get back on track?";
+      return "We've been working on exciting new features while you've been away.";
     } else {
-      return "Hey, we miss you! Your workout streak is waiting to be continued.";
+      return "Rest time is up, let's get back to it.";
     }
   };
 
@@ -40,7 +40,7 @@ export const InactiveReengagementEmail = ({
     <EmailLayout preview={`We miss you, ${userName}! Come back to Tracked`}>
       <EmailHeader />
 
-      <Heading>We Miss You!</Heading>
+      <Heading>Come back to Tracked!</Heading>
       <Paragraph>
         Hi {userName}, it's been {daysInactive} days since your last workout.{" "}
         {getMessage()}
@@ -65,10 +65,10 @@ export const InactiveReengagementEmail = ({
         />
       </FeatureBox>
 
-      <PrimaryButton href={appUrl}>Log a Workout</PrimaryButton>
+      <PrimaryButton href={appUrl}>Get Tracking</PrimaryButton>
 
       <Paragraph muted>
-        Remember: consistency beats perfection. Even a 10-minute session counts!
+        Remember: consistency beats perfection. Putting even just a little effort into tracking helps you stay accountable and see progress over time.
       </Paragraph>
 
       <DiscordButton />

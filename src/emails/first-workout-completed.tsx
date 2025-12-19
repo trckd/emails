@@ -11,7 +11,6 @@ import {
   SmallText,
   PrimaryButton,
   DiscordButton,
-  colors,
 } from "../components";
 
 interface FirstWorkoutCompletedEmailProps {
@@ -44,7 +43,7 @@ export const FirstWorkoutCompletedEmail = ({
       </Heading>
       <Paragraph>
         Congratulations, {userName}! You've just completed your first workout on
-        Tracked. This is the beginning of an amazing journey.
+        Tracked. 
       </Paragraph>
 
       <FeatureBox title="Your First Workout:">
@@ -63,37 +62,16 @@ export const FirstWorkoutCompletedEmail = ({
         )}
       </FeatureBox>
 
-      <Section
-        style={{
-          padding: "16px 0 16px 20px",
-          margin: "24px 0",
-          borderLeft: `4px solid ${colors.accent}`,
-        }}
-      >
-        <Text
-          style={{
-            color: colors.textMuted,
-            fontSize: "15px",
-            lineHeight: "22px",
-            fontStyle: "italic" as const,
-            margin: "0",
-          }}
-        >
-          "The secret of getting ahead is getting started." - Mark Twain
-        </Text>
-      </Section>
-
       <Paragraph>
-        You've taken the first step towards your fitness goals. Keep showing up,
-        stay consistent, and watch yourself grow stronger every day.
+        You've taken the first step towards standardizing how you train. 
+        The next workout you track will help you see if you are progressing or regressing.
       </Paragraph>
 
       <PrimaryButton href={workoutHistoryUrl}>View Your Progress</PrimaryButton>
 
       <TipBox title="Pro Tip">
-        Track every workout to see your progress over time. The data you collect
-        now will help you understand how far you've come in the weeks and months
-        ahead.
+        Want to track warm ups and intensity measures? Check out settings in the app
+        to enable these advanced tracking features.
       </TipBox>
 
       <DiscordButton />

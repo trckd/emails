@@ -108,11 +108,11 @@ export const WeekOneCheckinEmail = ({
       )}
 
       <PrimaryButton href={appUrl}>
-        {isActive ? "Continue Your Journey" : "Log Your First Workout"}
+        {isActive ? "Continue Tracking" : "Log Your First Workout"}
       </PrimaryButton>
 
       <TipBox title="Need Help?">
-        Our support team is here to help you get the most out of Tracked.
+        Our team is here to help you get the most out of Tracked.
         {supportUrl && (
           <>
             {" "}
