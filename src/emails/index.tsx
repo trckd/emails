@@ -1,3 +1,4 @@
+export * from "./client-onboarded";
 export * from "./support-email";
 export * from "./tracked-magic-link";
 export * from "./tracked-magic-link-activate";

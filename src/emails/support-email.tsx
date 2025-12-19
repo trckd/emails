@@ -1,5 +1,13 @@
-import React from "react";
-import { Container, Hr, Text } from "@react-email/components";
+import * as React from "react";
+import {
+  EmailLayout,
+  EmailHeader,
+  EmailFooter,
+  Heading,
+  FeatureBox,
+  SmallText,
+  DiscordButton,
+} from "../components";
 
 interface SupportEmailProps {
   email: string;
@@ -8,73 +16,31 @@ interface SupportEmailProps {
 }
 
 export const SupportEmail = ({
-  email,
-  message,
-  category,
+  email = "user@example.com",
+  message = "I'm having trouble syncing my workouts between devices. The app shows different workout history on my phone versus my tablet. Can you help me resolve this issue?",
+  category = "Technical Issue",
 }: SupportEmailProps) => (
-  <Container style={styles.container}>
-    <Hr style={styles.hr} />
-    <Text style={styles.text}>
-      <strong>Email:</strong> {email}
-    </Text>
-    <Text style={styles.text}>
-      <strong>Message:</strong> {message}
-    </Text>
-    <Text style={styles.text}>
-      <strong>Category:</strong> {category}
-    </Text>
+  <EmailLayout preview={`Support request from ${email}`}>
+    <EmailHeader />
 
-    <div
-      style={{
-        textAlign: "left" as const,
-        margin: "24px 0",
-      }}
-    >
-      <a
-        href="https://www.discord.gg/trackedgg"
-        style={{
-          backgroundColor: "#5865F2",
-          borderRadius: "8px",
-          fontSize: "16px",
-          fontWeight: "bold",
-          textDecoration: "none",
-          padding: "12px 32px",
-          display: "inline-block",
-        }}
-      >
-        <span style={{ color: "#ffffff", textDecoration: "none" }}>
-          Join our Discord Community
-        </span>
-      </a>
-    </div>
+    <Heading>Support Request</Heading>
 
-    <Hr style={styles.hr} />
-    <Text style={styles.footer}>Tracked, 9101 Horne Street, Vancouver, BC</Text>
-  </Container>
+    <FeatureBox>
+      <SmallText style={{ marginBottom: "8px" }}>
+        <strong>Email:</strong> {email}
+      </SmallText>
+      <SmallText style={{ marginBottom: "8px" }}>
+        <strong>Category:</strong> {category}
+      </SmallText>
+      <SmallText>
+        <strong>Message:</strong> {message}
+      </SmallText>
+    </FeatureBox>
+
+    <DiscordButton />
+
+    <EmailFooter />
+  </EmailLayout>
 );
 
-const styles = {
-  container: {
-    backgroundColor: "#1F2937",
-    margin: "0 auto",
-    padding: "16px",
-    paddingBottom: "64px",
-    borderRadius: "10px",
-    fontFamily: "sans-serif",
-  },
-  img: {
-    width: "40px",
-    height: "40px",
-  },
-  hr: {
-    borderColor: "#e6ebf1",
-    margin: "16px 0",
-  },
-  text: {
-    color: "#FFFFFF",
-  },
-  footer: {
-    color: "#6B7280",
-    fontSize: "12px",
-  },
-};
+export default SupportEmail;
