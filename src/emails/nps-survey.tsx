@@ -9,7 +9,7 @@ import {
   colors,
   spacing,
   borderRadius,
-} from "../components";
+} from "../components/index.js";
 
 interface NpsSurveyEmailProps {
   userName: string;

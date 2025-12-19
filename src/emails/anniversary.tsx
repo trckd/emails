@@ -10,7 +10,7 @@ import {
   DiscordButton,
   colors,
   spacing,
-} from "../components";
+} from "../components/index.js";
 
 interface AnniversaryEmailProps {
   userName: string;

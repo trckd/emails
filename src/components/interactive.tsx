@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Img, Section } from "@react-email/components";
-import { colors, borderRadius, spacing } from "./tokens";
+import { colors, borderRadius, spacing } from "./tokens.js";
 
 // ============================================
 // PrimaryButton - Main CTA button

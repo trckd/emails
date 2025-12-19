@@ -1,5 +1,5 @@
 // Design Tokens
-export * from "./tokens";
+export * from "./tokens.js";
 
 // Layout Components
 export {
@@ -8,7 +8,7 @@ export {
   EmailFooter,
   ContentSection,
   Divider,
-} from "./layout";
+} from "./layout.js";
 
 // Typography Components
 export {
@@ -17,7 +17,7 @@ export {
   Label,
   HighlightText,
   SmallText,
-} from "./typography";
+} from "./typography.js";
 
 // Interactive Components
 export {
@@ -27,7 +27,7 @@ export {
   SocialButtons,
   AppStoreButtons,
   TextLink,
-} from "./interactive";
+} from "./interactive.js";
 
 // Content Components
 export {
@@ -41,4 +41,4 @@ export {
   SectionHeading,
   HighlightBanner,
   Avatar,
-} from "./content";
+} from "./content.js";

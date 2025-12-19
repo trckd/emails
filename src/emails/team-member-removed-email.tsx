@@ -7,7 +7,7 @@ import {
   Paragraph,
   DiscordButton,
   TextLink,
-} from "../components";
+} from "../components/index.js";
 
 interface TeamMemberRemovedEmailProps {
   teamName?: string;

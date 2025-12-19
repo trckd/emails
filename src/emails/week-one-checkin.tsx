@@ -14,7 +14,7 @@ import {
   DiscordButton,
   TextLink,
   colors,
-} from "../components";
+} from "../components/index.js";
 
 interface WeekOneCheckinEmailProps {
   userName: string;

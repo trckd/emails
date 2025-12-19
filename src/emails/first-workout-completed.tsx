@@ -11,7 +11,7 @@ import {
   SmallText,
   PrimaryButton,
   DiscordButton,
-} from "../components";
+} from "../components/index.js";
 
 interface FirstWorkoutCompletedEmailProps {
   userName: string;

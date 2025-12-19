@@ -10,7 +10,7 @@ import {
   PrimaryButton,
   DiscordButton,
   colors,
-} from "../components";
+} from "../components/index.js";
 
 interface DirectMessageEmailProps {
   recipientName: string;

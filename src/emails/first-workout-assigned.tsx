@@ -9,7 +9,7 @@ import {
   SmallText,
   PrimaryButton,
   DiscordButton,
-} from "../components";
+} from "../components/index.js";
 
 interface FirstWorkoutAssignedEmailProps {
   clientName: string;

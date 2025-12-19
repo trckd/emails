@@ -12,7 +12,7 @@ import {
   SecondaryButton,
   DiscordButton,
   colors,
-} from "../components";
+} from "../components/index.js";
 
 interface SubscriptionCanceledEmailProps {
   userName: string;

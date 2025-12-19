@@ -11,8 +11,8 @@ import {
   Section,
   Text,
 } from "@react-email/components";
-import { colors, typography, spacing } from "./tokens";
-import { AppStoreButtons } from "./interactive";
+import { colors, typography, spacing } from "./tokens.js";
+import { AppStoreButtons } from "./interactive.js";
 
 const baseUrl = "https://tracked.gg/android-chrome-192x192.png";
 const defaultWebsiteUrl = "https://tracked.gg";

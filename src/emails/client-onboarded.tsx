@@ -9,7 +9,7 @@ import {
   TipBox,
   PrimaryButton,
   colors,
-} from "../components";
+} from "../components/index.js";
 
 interface ClientOnboardedEmailProps {
   coachName: string;

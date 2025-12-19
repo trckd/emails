@@ -7,7 +7,7 @@ import {
   FeatureBox,
   SmallText,
   DiscordButton,
-} from "../components";
+} from "../components/index.js";
 
 interface SupportEmailProps {
   email: string;

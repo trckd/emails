@@ -8,6 +8,6 @@ export {
   isPrivateRelayEmail,
   isValidEmailFormat,
   shouldSendEmailTo,
-} from "./email-validation";
+} from "./email-validation.js";
 
-export { isAnonymousUsername, getSafeDisplayName } from "./username-validation";
+export { isAnonymousUsername, getSafeDisplayName } from "./username-validation.js";

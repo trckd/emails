@@ -9,7 +9,7 @@ import {
   PrimaryButton,
   DiscordButton,
   TextLink,
-} from "../components";
+} from "../components/index.js";
 
 interface TeamInviteEmailProps {
   teamName?: string;

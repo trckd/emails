@@ -7,7 +7,7 @@ import {
   Paragraph,
   FeatureBox,
   SmallText,
-} from "../components";
+} from "../components/index.js";
 
 interface CoachRemovedClientEmailProps {
   clientName: string;

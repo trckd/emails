@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Section, Text, Row, Column } from "@react-email/components";
-import { colors, borderRadius, spacing } from "./tokens";
+import { colors, borderRadius, spacing } from "./tokens.js";
 
 // ============================================
 // FeatureBox - Highlighted feature/info box

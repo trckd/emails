@@ -12,7 +12,7 @@ import {
   HighlightBanner,
   SmallText,
   colors,
-} from "../components";
+} from "../components/index.js";
 
 interface MuscleGroup {
   muscleGroupId: string;

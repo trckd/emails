@@ -9,7 +9,7 @@ import {
   FeatureList,
   PrimaryButton,
   DiscordButton,
-} from "../components";
+} from "../components/index.js";
 
 interface InactiveReengagementEmailProps {
   userName: string;

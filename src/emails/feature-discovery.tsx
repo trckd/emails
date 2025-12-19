@@ -12,7 +12,7 @@ import {
   PrimaryButton,
   DiscordButton,
   colors,
-} from "../components";
+} from "../components/index.js";
 
 interface FeatureDiscoveryEmailProps {
   userName?: string;

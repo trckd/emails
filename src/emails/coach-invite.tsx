@@ -11,7 +11,7 @@ import {
   PrimaryButton,
   TextLink,
   colors,
-} from "../components";
+} from "../components/index.js";
 
 interface CoachInviteEmailProps {
   coachName: string;

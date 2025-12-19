@@ -7,10 +7,9 @@ import {
   Paragraph,
   FeatureBox,
   FeatureList,
-  TipBox,
   PrimaryButton,
   DiscordButton,
-} from "../components";
+} from "../components/index.js";
 import { Img } from "@react-email/components";
 
 interface WelcomeEmailProps {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Text, Heading as EmailHeading } from "@react-email/components";
-import { colors, spacing } from "./tokens";
+import { colors, spacing } from "./tokens.js";
 
 // ============================================
 // Heading - Title text with variants
