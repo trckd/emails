@@ -16,6 +16,11 @@ import { NewFollowerEmail } from "./emails/new-follower.js";
 import { NpsSurveyEmail } from "./emails/nps-survey.js";
 import { SubscriptionCanceledEmail } from "./emails/subscription-canceled.js";
 import { SupportEmail } from "./emails/support-email.js";
+import { TrialConvertedEmail } from "./emails/trial-converted.js";
+import { TrialEndingSoonEmail } from "./emails/trial-ending-soon.js";
+import { TrialExpiredEmail } from "./emails/trial-expired.js";
+import { TrialMidpointEmail } from "./emails/trial-midpoint.js";
+import { TrialStartedEmail } from "./emails/trial-started.js";
 import { TeamInviteEmail } from "./emails/team-invite.js";
 import { TeamMemberRemovedEmail } from "./emails/team-member-removed-email.js";
 import { TrackedMagicLink } from "./emails/tracked-magic-link.js";
@@ -58,6 +63,11 @@ export {
   TeamMemberRemovedEmail,
   TrackedMagicLink,
   TrackedMagicLinkActivate,
+  TrialConvertedEmail,
+  TrialEndingSoonEmail,
+  TrialExpiredEmail,
+  TrialMidpointEmail,
+  TrialStartedEmail,
   WeeklyProgressDigestEmail,
   WeekOneCheckinEmail,
   WelcomeEmail,
