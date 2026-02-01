@@ -275,25 +275,25 @@ export const MonthlyReportEmail = ({
               {metrics.avgReadinessEnergy && (
                 <DataRow
                   label="Avg Readiness Energy"
-                  value={`${formatDecimal(metrics.avgReadinessEnergy)}/10`}
+                  value={`${formatDecimal(metrics.avgReadinessEnergy)}/5`}
                 />
               )}
               {metrics.avgReadinessMood && (
                 <DataRow
                   label="Avg Readiness Mood"
-                  value={`${formatDecimal(metrics.avgReadinessMood)}/10`}
+                  value={`${formatDecimal(metrics.avgReadinessMood)}/5`}
                 />
               )}
               {metrics.avgSessionSatisfaction && (
                 <DataRow
                   label="Avg Session Satisfaction"
-                  value={`${formatDecimal(metrics.avgSessionSatisfaction)}/10`}
+                  value={`${formatDecimal(metrics.avgSessionSatisfaction)}/5`}
                 />
               )}
               {metrics.avgSessionProgress && (
                 <DataRow
                   label="Avg Session Progress"
-                  value={`${formatDecimal(metrics.avgSessionProgress)}/10`}
+                  value={`${formatDecimal(metrics.avgSessionProgress)}/5`}
                   isLast
                 />
               )}
