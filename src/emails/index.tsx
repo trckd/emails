@@ -13,6 +13,8 @@ export * from "./inactive-reengagement.js";
 export * from "./monthly-report.js";
 export * from "./new-follower.js";
 export * from "./nps-survey.js";
+export * from "./prospect-converted-client.js";
+export * from "./prospect-converted-coach.js";
 export * from "./subscription-canceled.js";
 export * from "./support-email.js";
 export * from "./team-invite.js";
