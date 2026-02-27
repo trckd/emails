@@ -14,6 +14,8 @@ import { InactiveReengagementEmail } from "./emails/inactive-reengagement.js";
 import { MonthlyReportEmail } from "./emails/monthly-report.js";
 import { NewFollowerEmail } from "./emails/new-follower.js";
 import { NpsSurveyEmail } from "./emails/nps-survey.js";
+import { ProspectConvertedClientEmail } from "./emails/prospect-converted-client.js";
+import { ProspectConvertedCoachEmail } from "./emails/prospect-converted-coach.js";
 import { SubscriptionCanceledEmail } from "./emails/subscription-canceled.js";
 import { SupportEmail } from "./emails/support-email.js";
 import { TrialConvertedEmail } from "./emails/trial-converted.js";
@@ -57,6 +59,8 @@ export {
   MonthlyReportEmail,
   NewFollowerEmail,
   NpsSurveyEmail,
+  ProspectConvertedClientEmail,
+  ProspectConvertedCoachEmail,
   SubscriptionCanceledEmail,
   SupportEmail,
   TeamInviteEmail,
