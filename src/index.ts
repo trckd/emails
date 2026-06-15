@@ -16,6 +16,9 @@ import { NewFollowerEmail } from "./emails/new-follower.js";
 import { NpsSurveyEmail } from "./emails/nps-survey.js";
 import { ProspectConvertedClientEmail } from "./emails/prospect-converted-client.js";
 import { ProspectConvertedCoachEmail } from "./emails/prospect-converted-coach.js";
+import { PaymentActionRequiredEmail } from "./emails/payment-action-required.js";
+import { PaymentFailedEmail } from "./emails/payment-failed.js";
+import { PaymentFinalNoticeEmail } from "./emails/payment-final-notice.js";
 import { SubscriptionCanceledEmail } from "./emails/subscription-canceled.js";
 import { SupportEmail } from "./emails/support-email.js";
 import { TrialConvertedEmail } from "./emails/trial-converted.js";
@@ -61,6 +64,9 @@ export {
   NpsSurveyEmail,
   ProspectConvertedClientEmail,
   ProspectConvertedCoachEmail,
+  PaymentActionRequiredEmail,
+  PaymentFailedEmail,
+  PaymentFinalNoticeEmail,
   SubscriptionCanceledEmail,
   SupportEmail,
   TeamInviteEmail,
