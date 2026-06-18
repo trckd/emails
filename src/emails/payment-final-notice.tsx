@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   DiscordButton,
   EmailFooter,
@@ -9,7 +9,9 @@ import {
   Paragraph,
   PrimaryButton,
   SmallText,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { paymentFinalNoticeMessages } from './payment-final-notice.messages.js';
 
 interface PaymentFinalNoticeEmailProps {
   userName?: string;
@@ -17,6 +19,7 @@ interface PaymentFinalNoticeEmailProps {
   updatePaymentUrl?: string;
   accessEndsDate?: string;
   websiteUrl?: string;
+  locale?: Locale;
 }
 
 /**
@@ -24,45 +27,35 @@ interface PaymentFinalNoticeEmailProps {
  * be canceled. Last chance to update the card before access ends.
  */
 export const PaymentFinalNoticeEmail = ({
-  userName = "Alex",
-  amountDue = "$49.00",
-  updatePaymentUrl = "https://dashboard.tracked.gg/subscription",
-  accessEndsDate = "January 22, 2025",
-  websiteUrl = "https://tracked.gg",
+  userName = 'Alex',
+  amountDue = '$49.00', // NOTE: caller-formatted (en-US)
+  updatePaymentUrl = 'https://dashboard.tracked.gg/subscription',
+  accessEndsDate = 'January 22, 2025', // NOTE: caller-formatted (en-US)
+  websiteUrl = 'https://tracked.gg',
+  locale = 'en',
 }: PaymentFinalNoticeEmailProps) => {
+  const t = paymentFinalNoticeMessages[locale];
   return (
-    <EmailLayout preview="Final notice: update your card to keep your Tracked subscription">
+    <EmailLayout preview={t.preview}>
       <EmailHeader />
 
-      <Heading>Final notice: your subscription is about to be canceled</Heading>
-      <Paragraph>
-        Hi {userName}, we've tried several times to charge {amountDue} for your
-        Tracked subscription, but the payment keeps failing.
-      </Paragraph>
+      <Heading>{t.heading}</Heading>
+      <Paragraph>{t.intro(userName, amountDue)}</Paragraph>
 
-      <FeatureBox title="Act now to keep your account:">
-        <SmallText style={{ marginBottom: "4px" }}>
-          • Without a successful payment, your coaching dashboard access ends on{" "}
-          {accessEndsDate}
+      <FeatureBox title={t.todoTitle}>
+        <SmallText style={{ marginBottom: '4px' }}>
+          {t.todoAccessEnds(accessEndsDate)}
         </SmallText>
-        <SmallText>
-          • Update your payment method now to avoid losing access and your
-          client setup
-        </SmallText>
+        <SmallText>{t.todoUpdate}</SmallText>
       </FeatureBox>
 
-      <PrimaryButton href={updatePaymentUrl}>
-        Update payment method
-      </PrimaryButton>
+      <PrimaryButton href={updatePaymentUrl}>{t.cta}</PrimaryButton>
 
-      <Paragraph>
-        Your data stays safe and you can reactivate anytime — but updating now
-        avoids any interruption to you and your clients.
-      </Paragraph>
+      <Paragraph>{t.reassurance}</Paragraph>
 
       <DiscordButton />
 
-      <EmailFooter websiteUrl={websiteUrl} />
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
     </EmailLayout>
   );
 };

@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Section, Img } from "@react-email/components";
+import * as React from 'react';
+import { Section, Img } from '@react-email/components';
 import {
   EmailLayout,
   EmailHeader,
@@ -11,7 +11,9 @@ import {
   PrimaryButton,
   TextLink,
   colors,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { coachInviteMessages } from './coach-invite.messages.js';
 
 interface CoachInviteEmailProps {
   coachName: string;
@@ -19,23 +21,26 @@ interface CoachInviteEmailProps {
   websiteUrl?: string;
   invitationLink: string;
   coachAvatarUrl?: string;
+  locale?: Locale;
 }
 
 export const CoachInviteEmail = ({
-  coachName = "Sarah Johnson",
-  coachEmail = "sarah@example.com",
-  websiteUrl = "https://tracked.gg",
-  invitationLink = "https://tracked.gg/invite/abc123",
-  coachAvatarUrl = "https://cdn.trckd.ca/avatars/default.png",
+  coachName = 'Sarah Johnson',
+  coachEmail = 'sarah@example.com',
+  websiteUrl = 'https://tracked.gg',
+  invitationLink = 'https://tracked.gg/invite/abc123',
+  coachAvatarUrl = 'https://cdn.trckd.ca/avatars/default.png',
+  locale = 'en',
 }: CoachInviteEmailProps) => {
+  const t = coachInviteMessages[locale];
   const displayName = coachName || coachEmail;
 
   return (
-    <EmailLayout preview={`Join ${displayName}'s coaching program on Tracked`}>
+    <EmailLayout preview={t.preview(displayName)}>
       <EmailHeader />
 
       {/* Coach Info Section */}
-      <Section style={{ textAlign: "center" as const, marginBottom: "24px" }}>
+      <Section style={{ textAlign: 'center' as const, marginBottom: '24px' }}>
         {coachAvatarUrl && (
           <Img
             src={coachAvatarUrl}
@@ -43,43 +48,32 @@ export const CoachInviteEmail = ({
             height="64"
             alt={displayName}
             style={{
-              borderRadius: "50%",
-              margin: "0 auto 16px",
+              borderRadius: '50%',
+              margin: '0 auto 16px',
               border: `2px solid ${colors.accent}`,
             }}
           />
         )}
-        <Heading style={{ textAlign: "center" as const }}>
-          Join {displayName}'s Coaching Program
+        <Heading style={{ textAlign: 'center' as const }}>
+          {t.heading(displayName)}
         </Heading>
       </Section>
 
-      <Paragraph>
-        Hi there! {displayName} wants to coach you on Tracked - a platform for
-        personalized fitness coaching and progress tracking.
-      </Paragraph>
+      <Paragraph>{t.intro(displayName)}</Paragraph>
 
-      <FeatureBox title="What you'll get:">
-        <FeatureList
-          items={[
-            { title: "Personalized workout programs" },
-            { title: "Direct communication with your coach" },
-            { title: "Progress tracking & analytics" },
-            { title: "Nutrition guidance" },
-          ]}
-        />
+      <FeatureBox title={t.featuresTitle}>
+        <FeatureList items={t.features} />
       </FeatureBox>
 
       <PrimaryButton href={invitationLink} fullWidth>
-        Accept Coaching Invitation
+        {t.cta}
       </PrimaryButton>
 
-      <Paragraph muted style={{ textAlign: "center" as const }}>
-        If this email was not expected, please ignore it. Learn more about
-        Tracked at <TextLink href={websiteUrl}>tracked.gg</TextLink>
+      <Paragraph muted style={{ textAlign: 'center' as const }}>
+        {t.ignoreNotice} <TextLink href={websiteUrl}>{t.learnMore}</TextLink>
       </Paragraph>
 
-      <EmailFooter websiteUrl={websiteUrl} />
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
     </EmailLayout>
   );
 };

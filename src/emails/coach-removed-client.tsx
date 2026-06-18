@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   EmailLayout,
   EmailHeader,
@@ -7,43 +7,38 @@ import {
   Paragraph,
   FeatureBox,
   SmallText,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { coachRemovedClientMessages } from './coach-removed-client.messages.js';
 
 interface CoachRemovedClientEmailProps {
   clientName: string;
   coachName: string;
   websiteUrl?: string;
+  locale?: Locale;
 }
 
 export const CoachRemovedClientEmail = ({
-  clientName = "Alex",
-  coachName = "Sarah Johnson",
-  websiteUrl = "https://tracked.gg",
+  clientName = 'Alex',
+  coachName = 'Sarah Johnson',
+  websiteUrl = 'https://tracked.gg',
+  locale = 'en',
 }: CoachRemovedClientEmailProps) => {
+  const t = coachRemovedClientMessages[locale];
   return (
-    <EmailLayout preview={`Update to your coaching relationship with ${coachName}`}>
+    <EmailLayout preview={t.preview(coachName)}>
       <EmailHeader />
 
-      <Heading>Coaching Relationship Update</Heading>
-      <Paragraph>
-        Hi {clientName}, {coachName} has ended your coaching relationship on
-        Tracked.
-      </Paragraph>
+      <Heading>{t.heading}</Heading>
+      <Paragraph>{t.intro(clientName, coachName)}</Paragraph>
 
       <FeatureBox>
-        <SmallText>
-          Your workout history and progress data remain available in your
-          account. You can continue using Tracked independently or connect with
-          a new coach.
-        </SmallText>
+        <SmallText>{t.dataNotice}</SmallText>
       </FeatureBox>
 
-      <Paragraph>
-        Thank you for using Tracked. If you have any questions or concerns,
-        please don't hesitate to reach out to our support team.
-      </Paragraph>
+      <Paragraph>{t.closing}</Paragraph>
 
-      <EmailFooter websiteUrl={websiteUrl} />
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
     </EmailLayout>
   );
 };

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   EmailLayout,
   EmailHeader,
@@ -9,7 +9,9 @@ import {
   SmallText,
   PrimaryButton,
   DiscordButton,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { firstWorkoutAssignedMessages } from './first-workout-assigned.messages.js';
 
 interface FirstWorkoutAssignedEmailProps {
   clientName: string;
@@ -17,51 +19,43 @@ interface FirstWorkoutAssignedEmailProps {
   programName: string;
   workoutUrl: string;
   websiteUrl?: string;
+  locale?: Locale;
 }
 
 export const FirstWorkoutAssignedEmail = ({
-  clientName = "Alex",
-  coachName = "Sarah Johnson",
-  programName = "8-Week Strength Builder",
-  workoutUrl = "tracked://app",
-  websiteUrl = "https://tracked.gg",
+  clientName = 'Alex',
+  coachName = 'Sarah Johnson',
+  programName = '8-Week Strength Builder',
+  workoutUrl = 'tracked://app',
+  websiteUrl = 'https://tracked.gg',
+  locale = 'en',
 }: FirstWorkoutAssignedEmailProps) => {
+  const t = firstWorkoutAssignedMessages[locale];
   return (
-    <EmailLayout
-      preview={`${coachName} has assigned your first workout program on Tracked`}
-    >
+    <EmailLayout preview={t.preview(coachName)}>
       <EmailHeader />
 
-      <Heading>Your Training Journey Begins!</Heading>
-      <Paragraph>
-        Hi {clientName}, {coachName} has created your personalized workout
-        program and it's ready for you to start.
-      </Paragraph>
+      <Heading>{t.heading}</Heading>
+      <Paragraph>{t.intro(clientName, coachName)}</Paragraph>
 
-      <FeatureBox title="Program Details:">
+      <FeatureBox title={t.detailsTitle}>
         <SmallText>
-          <strong>Program:</strong> {programName}
+          <strong>{t.programLabel}</strong> {programName}
         </SmallText>
-        <SmallText style={{ marginTop: "4px" }}>
-          <strong>Coach:</strong> {coachName}
+        <SmallText style={{ marginTop: '4px' }}>
+          <strong>{t.coachLabel}</strong> {coachName}
         </SmallText>
       </FeatureBox>
 
-      <Paragraph>
-        Your coach has designed this program specifically for your goals. Open
-        the app to view your workouts and get started!
-      </Paragraph>
+      <Paragraph>{t.designedNote}</Paragraph>
 
-      <PrimaryButton href={workoutUrl}>View Your Program</PrimaryButton>
+      <PrimaryButton href={workoutUrl}>{t.cta}</PrimaryButton>
 
-      <Paragraph>
-        Remember to track each workout and communicate with your coach if you
-        have any questions or concerns.
-      </Paragraph>
+      <Paragraph>{t.trackReminder}</Paragraph>
 
       <DiscordButton />
 
-      <EmailFooter websiteUrl={websiteUrl} />
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
     </EmailLayout>
   );
 };

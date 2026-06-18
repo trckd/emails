@@ -1,6 +1,8 @@
-import * as React from "react";
-import { Section, Text, Row, Column } from "@react-email/components";
-import { colors, borderRadius, spacing } from "./tokens.js";
+import * as React from 'react';
+import { Section, Text, Row, Column } from '@react-email/components';
+import { colors, borderRadius, spacing } from './tokens.js';
+import type { Locale } from '../i18n/locales.js';
+import { commonMessages } from './messages.js';
 
 // ============================================
 // FeatureBox - Highlighted feature/info box
@@ -29,10 +31,10 @@ const featureBoxStyle = {
 
 const featureBoxTitleStyle = {
   color: colors.textPrimary,
-  fontSize: "16px",
-  fontWeight: "bold" as const,
+  fontSize: '16px',
+  fontWeight: 'bold' as const,
   marginBottom: spacing.sm,
-  marginTop: "0",
+  marginTop: '0',
 };
 
 // ============================================
@@ -41,12 +43,14 @@ const featureBoxTitleStyle = {
 interface TipBoxProps {
   title?: string;
   children: React.ReactNode;
+  locale?: Locale;
 }
 
-export const TipBox = ({ title = "Tip", children }: TipBoxProps) => {
+export const TipBox = ({ title, children, locale = 'en' }: TipBoxProps) => {
+  const resolvedTitle = title ?? commonMessages[locale].tipBox.defaultTitle;
   return (
     <Section style={tipBoxStyle}>
-      <Text style={tipBoxTitleStyle}>{title}</Text>
+      <Text style={tipBoxTitleStyle}>{resolvedTitle}</Text>
       <Text style={tipBoxTextStyle}>{children}</Text>
     </Section>
   );
@@ -62,17 +66,17 @@ const tipBoxStyle = {
 
 const tipBoxTitleStyle = {
   color: colors.accent,
-  fontSize: "14px",
-  fontWeight: "bold" as const,
+  fontSize: '14px',
+  fontWeight: 'bold' as const,
   marginBottom: spacing.xs,
-  marginTop: "0",
+  marginTop: '0',
 };
 
 const tipBoxTextStyle = {
   color: colors.textSecondary,
-  fontSize: "14px",
-  lineHeight: "20px",
-  margin: "0",
+  fontSize: '14px',
+  lineHeight: '20px',
+  margin: '0',
 };
 
 // ============================================
@@ -82,27 +86,31 @@ interface MetricCardProps {
   label: string;
   value: string | number;
   change?: React.ReactNode;
-  size?: "normal" | "small";
+  size?: 'normal' | 'small';
 }
 
 export const MetricCard = ({
   label,
   value,
   change,
-  size = "normal",
+  size = 'normal',
 }: MetricCardProps) => {
   return (
     <Section style={metricCardStyle}>
       <Text style={metricLabelStyle}>{label}</Text>
       <table>
         <tr>
-          <td style={{ verticalAlign: "middle" }}>
-            <Text style={size === "small" ? metricValueSmallStyle : metricValueStyle}>
+          <td style={{ verticalAlign: 'middle' }}>
+            <Text
+              style={
+                size === 'small' ? metricValueSmallStyle : metricValueStyle
+              }
+            >
               {value}
             </Text>
           </td>
           {change && (
-            <td style={{ verticalAlign: "middle", paddingLeft: spacing.sm }}>
+            <td style={{ verticalAlign: 'middle', paddingLeft: spacing.sm }}>
               {change}
             </td>
           )}
@@ -121,23 +129,23 @@ const metricCardStyle = {
 
 const metricLabelStyle = {
   color: colors.textMuted,
-  fontSize: "14px",
-  marginBottom: "2px",
-  marginTop: "0",
+  fontSize: '14px',
+  marginBottom: '2px',
+  marginTop: '0',
 };
 
 const metricValueStyle = {
   color: colors.textPrimary,
-  fontSize: "24px",
-  fontWeight: "700" as const,
-  margin: "0",
+  fontSize: '24px',
+  fontWeight: '700' as const,
+  margin: '0',
 };
 
 const metricValueSmallStyle = {
   color: colors.textPrimary,
-  fontSize: "20px",
-  fontWeight: "700" as const,
-  margin: "0",
+  fontSize: '20px',
+  fontWeight: '700' as const,
+  margin: '0',
 };
 
 // ============================================
@@ -170,20 +178,20 @@ export const ChangeIndicator = ({
 
 const changePositiveStyle = {
   color: colors.success,
-  fontSize: "14px",
-  margin: "0",
+  fontSize: '14px',
+  margin: '0',
 };
 
 const changeNegativeStyle = {
   color: colors.error,
-  fontSize: "14px",
-  margin: "0",
+  fontSize: '14px',
+  margin: '0',
 };
 
 const changeNeutralStyle = {
   color: colors.textMuted,
-  fontSize: "14px",
-  margin: "0",
+  fontSize: '14px',
+  margin: '0',
 };
 
 // ============================================
@@ -200,13 +208,13 @@ export const DataRow = ({ label, value, isLast = false }: DataRowProps) => {
     <Row
       style={{
         padding: spacing.sm,
-        borderBottom: isLast ? "none" : `1px solid ${colors.border}`,
+        borderBottom: isLast ? 'none' : `1px solid ${colors.border}`,
       }}
     >
       <Column>
         <Text style={dataRowLabelStyle}>{label}</Text>
       </Column>
-      <Column style={{ textAlign: "right" as const }}>
+      <Column style={{ textAlign: 'right' as const }}>
         <Text style={dataRowValueStyle}>{value}</Text>
       </Column>
     </Row>
@@ -215,15 +223,15 @@ export const DataRow = ({ label, value, isLast = false }: DataRowProps) => {
 
 const dataRowLabelStyle = {
   color: colors.textSecondary,
-  fontSize: "14px",
-  margin: "0",
+  fontSize: '14px',
+  margin: '0',
 };
 
 const dataRowValueStyle = {
   color: colors.accent,
-  fontSize: "16px",
-  fontWeight: "600" as const,
-  margin: "0",
+  fontSize: '16px',
+  fontWeight: '600' as const,
+  margin: '0',
 };
 
 // ============================================
@@ -257,14 +265,14 @@ export const FeatureList = ({ items }: FeatureListProps) => {
 };
 
 const featureListStyle = {
-  margin: "0",
-  paddingLeft: "20px",
+  margin: '0',
+  paddingLeft: '20px',
 };
 
 const featureListItemStyle = {
   color: colors.textSecondary,
-  fontSize: "14px",
-  lineHeight: "24px",
+  fontSize: '14px',
+  lineHeight: '24px',
   marginBottom: spacing.sm,
 };
 
@@ -282,7 +290,7 @@ export const ListBox = ({ children }: ListBoxProps) => {
 const listBoxStyle = {
   backgroundColor: colors.surface,
   borderRadius: borderRadius.md,
-  overflow: "hidden" as const,
+  overflow: 'hidden' as const,
   border: `1px solid ${colors.border}`,
 };
 
@@ -299,11 +307,11 @@ export const SectionHeading = ({ children }: SectionHeadingProps) => {
 
 const sectionHeadingStyle = {
   color: colors.textPrimary,
-  fontSize: "18px",
+  fontSize: '18px',
   margin: `0 0 ${spacing.sm} 0`,
-  fontWeight: "600" as const,
-  textTransform: "uppercase" as const,
-  letterSpacing: "0.5px",
+  fontWeight: '600' as const,
+  textTransform: 'uppercase' as const,
+  letterSpacing: '0.5px',
 };
 
 // ============================================
@@ -320,7 +328,7 @@ export const HighlightBanner = ({ children }: HighlightBannerProps) => {
 const highlightBannerStyle = {
   backgroundColor: colors.accent,
   padding: `${spacing.sm} ${spacing.lg}`,
-  textAlign: "center" as const,
+  textAlign: 'center' as const,
   borderRadius: borderRadius.md,
   margin: `${spacing.lg} 0`,
 };
@@ -342,9 +350,9 @@ export const Avatar = ({ src, alt, size = 64 }: AvatarProps) => {
       width={size}
       height={size}
       style={{
-        borderRadius: "50%",
-        display: "block",
-        margin: "0 auto",
+        borderRadius: '50%',
+        display: 'block',
+        margin: '0 auto',
       }}
     />
   );

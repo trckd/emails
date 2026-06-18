@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   EmailLayout,
   EmailHeader,
@@ -8,58 +8,42 @@ import {
   FeatureBox,
   FeatureList,
   PrimaryButton,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { prospectConvertedClientMessages } from './prospect-converted-client.messages.js';
 
 interface ProspectConvertedClientEmailProps {
   clientName: string;
   coachName: string;
   appUrl?: string;
   websiteUrl?: string;
+  locale?: Locale;
 }
 
 export const ProspectConvertedClientEmail = ({
-  clientName = "there",
-  coachName = "your coach",
-  appUrl = "tracked://app",
-  websiteUrl = "https://tracked.gg",
+  clientName = 'there',
+  coachName = 'your coach',
+  appUrl = 'tracked://app',
+  websiteUrl = 'https://tracked.gg',
+  locale = 'en',
 }: ProspectConvertedClientEmailProps) => {
+  const t = prospectConvertedClientMessages[locale];
   return (
-    <EmailLayout preview={`You've been accepted by ${coachName} on Tracked!`}>
+    <EmailLayout preview={t.preview(coachName)}>
       <EmailHeader />
 
-      <Heading>Welcome to the Team!</Heading>
-      <Paragraph>
-        Hi {clientName}, great news — {coachName} has accepted you as a client
-        on Tracked. You're all set to start your coaching journey.
-      </Paragraph>
+      <Heading>{t.heading}</Heading>
+      <Paragraph>{t.intro(clientName, coachName)}</Paragraph>
 
-      <FeatureBox title="What happens next:">
-        <FeatureList
-          items={[
-            {
-              title: "Open the app",
-              description:
-                "Your coach is now connected to your account and ready to go.",
-            },
-            {
-              title: "Check your workouts",
-              description:
-                "Your coach can assign personalized programs directly to you.",
-            },
-            {
-              title: "Stay in touch",
-              description:
-                "Message your coach anytime through the app for guidance and support.",
-            },
-          ]}
-        />
+      <FeatureBox title={t.featuresTitle}>
+        <FeatureList items={t.features} />
       </FeatureBox>
 
       <PrimaryButton href={appUrl} fullWidth>
-        Open Tracked
+        {t.cta}
       </PrimaryButton>
 
-      <EmailFooter websiteUrl={websiteUrl} />
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
     </EmailLayout>
   );
 };

@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Section, Img, Text } from "@react-email/components";
+import * as React from 'react';
+import { Section, Img, Text } from '@react-email/components';
 import {
   EmailLayout,
   EmailHeader,
@@ -11,7 +11,9 @@ import {
   colors,
   spacing,
   borderRadius,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { clientInactiveAlertMessages } from './client-inactive-alert.messages.js';
 
 interface ClientInactiveAlertEmailProps {
   coachName: string;
@@ -23,32 +25,40 @@ interface ClientInactiveAlertEmailProps {
   clientProfileUrl: string;
   messageUrl: string;
   websiteUrl?: string;
+  locale?: Locale;
 }
 
 export const ClientInactiveAlertEmail = ({
-  coachName = "Sarah Johnson",
-  clientName = "Alex Thompson",
-  clientEmail = "alex@example.com",
-  clientAvatarUrl = "https://cdn.trckd.ca/avatars/default.png",
+  coachName = 'Sarah Johnson',
+  clientName = 'Alex Thompson',
+  clientEmail = 'alex@example.com',
+  clientAvatarUrl = 'https://cdn.trckd.ca/avatars/default.png',
   daysInactive = 10,
-  lastWorkoutDate = "December 9, 2024",
-  clientProfileUrl = "tracked://app",
-  messageUrl = "tracked://app",
-  websiteUrl = "https://tracked.gg",
+  // NOTE: caller-formatted (en-US)
+  lastWorkoutDate = 'December 9, 2024',
+  clientProfileUrl = 'tracked://app',
+  messageUrl = 'tracked://app',
+  websiteUrl = 'https://tracked.gg',
+  locale = 'en',
 }: ClientInactiveAlertEmailProps) => {
+  const t = clientInactiveAlertMessages[locale];
   const displayName = clientName || clientEmail;
 
-  const urgencyLevel = daysInactive >= 14 ? "high" : daysInactive >= 7 ? "medium" : "low";
-  const urgencyColor = urgencyLevel === "high" ? colors.error : urgencyLevel === "medium" ? colors.warning : colors.textSecondary;
+  const urgencyLevel =
+    daysInactive >= 14 ? 'high' : daysInactive >= 7 ? 'medium' : 'low';
+  const urgencyColor =
+    urgencyLevel === 'high'
+      ? colors.error
+      : urgencyLevel === 'medium'
+        ? colors.warning
+        : colors.textSecondary;
 
   return (
-    <EmailLayout preview={`${displayName} hasn't logged a workout in ${daysInactive} days`}>
+    <EmailLayout preview={t.preview(displayName, daysInactive)}>
       <EmailHeader />
 
-      <Heading>Client Activity Alert</Heading>
-      <Paragraph>
-        Hi {coachName}, one of your clients needs a check-in.
-      </Paragraph>
+      <Heading>{t.heading}</Heading>
+      <Paragraph>{t.intro(coachName)}</Paragraph>
 
       {/* Client Card */}
       <Section
@@ -60,29 +70,34 @@ export const ClientInactiveAlertEmail = ({
           border: `1px solid ${colors.border}`,
         }}
       >
-        <table cellPadding="0" cellSpacing="0" style={{ width: "100%" }}>
+        <table cellPadding="0" cellSpacing="0" style={{ width: '100%' }}>
           <tr>
             {clientAvatarUrl && (
-              <td style={{ width: "48px", verticalAlign: "top" }}>
+              <td style={{ width: '48px', verticalAlign: 'top' }}>
                 <Img
                   src={clientAvatarUrl}
                   width="48"
                   height="48"
                   alt={displayName}
                   style={{
-                    borderRadius: "50%",
+                    borderRadius: '50%',
                     border: `2px solid ${colors.border}`,
                   }}
                 />
               </td>
             )}
-            <td style={{ paddingLeft: clientAvatarUrl ? "16px" : "0", verticalAlign: "top" }}>
+            <td
+              style={{
+                paddingLeft: clientAvatarUrl ? '16px' : '0',
+                verticalAlign: 'top',
+              }}
+            >
               <Text
                 style={{
                   color: colors.textPrimary,
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                  margin: "0 0 4px 0",
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  margin: '0 0 4px 0',
                 }}
               >
                 {displayName}
@@ -90,22 +105,22 @@ export const ClientInactiveAlertEmail = ({
               <Text
                 style={{
                   color: urgencyColor,
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  margin: "0 0 4px 0",
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  margin: '0 0 4px 0',
                 }}
               >
-                {daysInactive} days inactive
+                {t.daysInactive(daysInactive)}
               </Text>
               {lastWorkoutDate && (
                 <Text
                   style={{
                     color: colors.textMuted,
-                    fontSize: "13px",
-                    margin: "0",
+                    fontSize: '13px',
+                    margin: '0',
                   }}
                 >
-                  Last workout: {lastWorkoutDate}
+                  {t.lastWorkout(lastWorkoutDate)}
                 </Text>
               )}
             </td>
@@ -113,16 +128,13 @@ export const ClientInactiveAlertEmail = ({
         </table>
       </Section>
 
-      <Paragraph>
-        A quick message can make a big difference. Consider reaching out to see
-        how they're doing and if there's anything blocking their progress.
-      </Paragraph>
+      <Paragraph>{t.urgencyMessage[urgencyLevel]}</Paragraph>
 
-      <PrimaryButton href={messageUrl}>Send a Message</PrimaryButton>
+      <PrimaryButton href={messageUrl}>{t.sendMessage}</PrimaryButton>
 
-      <SecondaryButton href={clientProfileUrl}>View Profile</SecondaryButton>
+      <SecondaryButton href={clientProfileUrl}>{t.viewProfile}</SecondaryButton>
 
-      <EmailFooter websiteUrl={websiteUrl} />
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
     </EmailLayout>
   );
 };

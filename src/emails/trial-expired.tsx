@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Section, Text } from "@react-email/components";
+import * as React from 'react';
+import { Section, Text } from '@react-email/components';
 import {
   EmailLayout,
   EmailHeader,
@@ -11,84 +11,83 @@ import {
   PrimaryButton,
   DiscordButton,
   colors,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { trialExpiredMessages } from './trial-expired.messages.js';
 
 interface TrialExpiredEmailProps {
   userName: string;
   reactivateUrl: string;
   websiteUrl?: string;
+  locale?: Locale;
 }
 
 export const TrialExpiredEmail = ({
-  userName = "Coach",
-  reactivateUrl = "https://dashboard.tracked.gg/billing",
-  websiteUrl = "https://tracked.gg",
+  userName = 'Coach',
+  reactivateUrl = 'https://dashboard.tracked.gg/billing',
+  websiteUrl = 'https://tracked.gg',
+  locale = 'en',
 }: TrialExpiredEmailProps) => {
+  const t = trialExpiredMessages[locale];
   return (
-    <EmailLayout preview="Your Tracked trial has ended">
+    <EmailLayout preview={t.preview}>
       <EmailHeader />
 
-      <Heading>Your Trial Has Ended</Heading>
-      <Paragraph>
-        Hi {userName}, your free trial of Tracked has expired. Your access to
-        the coaching dashboard has been paused, but don't worry — your data is
-        safe.
-      </Paragraph>
+      <Heading>{t.heading}</Heading>
+      <Paragraph>{t.intro(userName)}</Paragraph>
 
-      <FeatureBox title="Your data is preserved:">
-        <SmallText style={{ marginBottom: "4px" }}>
-          • All client profiles and workout history are saved
-        </SmallText>
-        <SmallText style={{ marginBottom: "4px" }}>
-          • Your workout templates and programs are intact
-        </SmallText>
-        <SmallText style={{ marginBottom: "4px" }}>
-          • Client progress data remains accessible when you return
-        </SmallText>
-        <SmallText>• Subscribe anytime to regain full access</SmallText>
+      <FeatureBox title={t.dataPreservedTitle}>
+        {t.dataPreserved.map((item, index) => (
+          <SmallText
+            key={index}
+            style={
+              index < t.dataPreserved.length - 1
+                ? { marginBottom: '4px' }
+                : undefined
+            }
+          >
+            • {item}
+          </SmallText>
+        ))}
       </FeatureBox>
 
       <Section
         style={{
           backgroundColor: colors.surface,
-          padding: "20px 24px",
-          borderRadius: "8px",
-          margin: "24px 0",
+          padding: '20px 24px',
+          borderRadius: '8px',
+          margin: '24px 0',
           borderLeft: `4px solid ${colors.accent}`,
         }}
       >
         <Text
           style={{
             color: colors.accent,
-            fontSize: "18px",
-            fontWeight: "bold" as const,
-            marginBottom: "8px",
+            fontSize: '18px',
+            fontWeight: 'bold' as const,
+            marginBottom: '8px',
           }}
         >
-          Ready to continue?
+          {t.reactivateTitle}
         </Text>
         <Text
           style={{
             color: colors.textSecondary,
-            fontSize: "14px",
-            lineHeight: "20px",
-            margin: "0 0 16px 0",
+            fontSize: '14px',
+            lineHeight: '20px',
+            margin: '0 0 16px 0',
           }}
         >
-          Reactivate your account to pick up right where you left off. Your
-          clients are waiting.
+          {t.reactivateBody}
         </Text>
-        <PrimaryButton href={reactivateUrl}>Reactivate Now</PrimaryButton>
+        <PrimaryButton href={reactivateUrl}>{t.cta}</PrimaryButton>
       </Section>
 
-      <Paragraph>
-        If you decided Tracked isn't for you right now, we'd love to hear why.
-        Your feedback helps us build a better product for coaches like you.
-      </Paragraph>
+      <Paragraph>{t.feedback}</Paragraph>
 
       <DiscordButton />
 
-      <EmailFooter websiteUrl={websiteUrl} />
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
     </EmailLayout>
   );
 };

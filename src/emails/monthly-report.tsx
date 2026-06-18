@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Section, Text, Row, Column, Hr } from "@react-email/components";
+import * as React from 'react';
+import { Section, Text, Row, Column, Hr } from '@react-email/components';
 import {
   EmailLayout,
   EmailHeader,
@@ -12,7 +12,14 @@ import {
   HighlightBanner,
   SmallText,
   colors,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import {
+  formatNumber,
+  formatDecimal,
+  formatMonthYear,
+} from '../i18n/format.js';
+import { monthlyReportMessages } from './monthly-report.messages.js';
 
 interface MuscleGroup {
   muscleGroupId: string;
@@ -56,27 +63,13 @@ interface MonthlyReportEmailProps {
   previousMetrics?: PreviousMetrics | null;
   websiteUrl?: string;
   unsubscribeUrl?: string;
-}
-
-function formatNumber(num: number | null): string {
-  if (num === null) return "N/A";
-  return num.toLocaleString();
-}
-
-function formatDecimal(num: number | null, decimals: number = 1): string {
-  if (num === null) return "N/A";
-  return num.toFixed(decimals);
-}
-
-function getMonthName(reportMonth: string): string {
-  const date = new Date(reportMonth);
-  return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  locale?: Locale;
 }
 
 const defaultMetrics: MonthlyMetrics = {
   accountId: 1,
-  email: "user@example.com",
-  reportMonth: "2025-11-01",
+  email: 'user@example.com',
+  reportMonth: '2025-11-01',
   avgStepCount: 8547,
   avgBodyweight: 175.3,
   bodyweightChange: -2.1,
@@ -84,11 +77,11 @@ const defaultMetrics: MonthlyMetrics = {
   totalSetsTracked: 432,
   totalSessionsTracked: 18,
   topMuscleGroups: [
-    { muscleGroupId: "1", name: "Chest", sets: 89 },
-    { muscleGroupId: "2", name: "Back", sets: 76 },
-    { muscleGroupId: "3", name: "Legs", sets: 65 },
-    { muscleGroupId: "4", name: "Shoulders", sets: 54 },
-    { muscleGroupId: "5", name: "Arms", sets: 43 },
+    { muscleGroupId: '1', name: 'Chest', sets: 89 },
+    { muscleGroupId: '2', name: 'Back', sets: 76 },
+    { muscleGroupId: '3', name: 'Legs', sets: 65 },
+    { muscleGroupId: '4', name: 'Shoulders', sets: 54 },
+    { muscleGroupId: '5', name: 'Arms', sets: 43 },
   ],
   avgReadinessEnergy: 7.8,
   avgReadinessMood: 8.2,
@@ -113,10 +106,18 @@ const defaultPreviousMetrics: PreviousMetrics = {
 export const MonthlyReportEmail = ({
   metrics = defaultMetrics,
   previousMetrics = defaultPreviousMetrics,
-  websiteUrl = "https://tracked.gg",
+  websiteUrl = 'https://tracked.gg',
   unsubscribeUrl,
+  locale = 'en',
 }: MonthlyReportEmailProps) => {
-  const monthName = getMonthName(metrics.reportMonth);
+  const t = monthlyReportMessages[locale];
+  const monthName = formatMonthYear(metrics.reportMonth, locale);
+
+  // Locale-aware formatters that fall back to the catalog's "N/A" for missing data.
+  const fmtNumber = (num: number | null): string =>
+    num === null ? t.notAvailable : formatNumber(num, locale);
+  const fmtDecimal = (num: number | null, decimals = 1): string =>
+    num === null ? t.notAvailable : formatDecimal(num, locale, decimals);
 
   const hasBodyweightData = metrics.avgBodyweight || metrics.bodyweightChange;
   const hasSessionInsights =
@@ -126,30 +127,28 @@ export const MonthlyReportEmail = ({
     metrics.avgSessionProgress;
 
   return (
-    <EmailLayout
-      preview={`Your ${monthName} Training Report - Your monthly fitness journey at a glance`}
-    >
+    <EmailLayout preview={t.preview(monthName)}>
       <EmailHeader />
 
       <HighlightBanner>
         <Text
           style={{
-            color: "#ffffff",
-            margin: "0",
-            fontSize: "20px",
-            fontWeight: "700" as const,
+            color: '#ffffff',
+            margin: '0',
+            fontSize: '20px',
+            fontWeight: '700' as const,
           }}
         >
-          Your {monthName} Training Report
+          {t.reportTitle(monthName)}
         </Text>
       </HighlightBanner>
 
       {/* Activity Overview */}
-      <Section style={{ marginBottom: "24px" }}>
-        <SectionHeading>Activity Overview</SectionHeading>
+      <Section style={{ marginBottom: '24px' }}>
+        <SectionHeading>{t.activityOverview}</SectionHeading>
         <MetricCard
-          label="Average Daily Steps"
-          value={formatNumber(metrics.avgStepCount)}
+          label={t.avgDailySteps}
+          value={fmtNumber(metrics.avgStepCount)}
           change={
             <ChangeIndicator
               value={metrics.avgStepCount}
@@ -162,14 +161,18 @@ export const MonthlyReportEmail = ({
       {/* Bodyweight Progress */}
       {hasBodyweightData && (
         <>
-          <Hr style={{ borderColor: colors.border, margin: "24px 0" }} />
-          <Section style={{ marginBottom: "24px" }}>
-            <SectionHeading>Bodyweight Trends</SectionHeading>
+          <Hr style={{ borderColor: colors.border, margin: '24px 0' }} />
+          <Section style={{ marginBottom: '24px' }}>
+            <SectionHeading>{t.bodyweightTrends}</SectionHeading>
             <Row>
-              <Column style={{ width: "48%" }}>
+              <Column style={{ width: '48%' }}>
                 <MetricCard
-                  label="Average Bodyweight"
-                  value={`${formatDecimal(metrics.avgBodyweight, 1)} lbs`}
+                  label={t.avgBodyweight}
+                  value={
+                    metrics.avgBodyweight !== null
+                      ? t.weightWithUnit(fmtDecimal(metrics.avgBodyweight, 1))
+                      : t.notAvailable
+                  }
                   size="small"
                   change={
                     <ChangeIndicator
@@ -179,16 +182,17 @@ export const MonthlyReportEmail = ({
                   }
                 />
               </Column>
-              <Column style={{ width: "4%" }} />
-              <Column style={{ width: "48%" }}>
+              <Column style={{ width: '4%' }} />
+              <Column style={{ width: '48%' }}>
                 <MetricCard
-                  label="Monthly Change"
+                  label={t.monthlyChange}
                   value={
                     metrics.bodyweightChange !== null
-                      ? (metrics.bodyweightChange >= 0 ? "+" : "") +
-                        formatDecimal(metrics.bodyweightChange, 1) +
-                        " lbs"
-                      : "N/A"
+                      ? t.changeWithUnit(
+                          (metrics.bodyweightChange >= 0 ? '+' : '') +
+                            fmtDecimal(metrics.bodyweightChange, 1)
+                        )
+                      : t.notAvailable
                   }
                   size="small"
                 />
@@ -199,14 +203,14 @@ export const MonthlyReportEmail = ({
       )}
 
       {/* Training Summary */}
-      <Hr style={{ borderColor: colors.border, margin: "24px 0" }} />
-      <Section style={{ marginBottom: "24px" }}>
-        <SectionHeading>Training Summary</SectionHeading>
+      <Hr style={{ borderColor: colors.border, margin: '24px 0' }} />
+      <Section style={{ marginBottom: '24px' }}>
+        <SectionHeading>{t.trainingSummary}</SectionHeading>
         <Row>
-          <Column style={{ width: "48%" }}>
+          <Column style={{ width: '48%' }}>
             <MetricCard
-              label="Sessions Per Week"
-              value={formatDecimal(metrics.avgSessionsPerWeek, 1)}
+              label={t.sessionsPerWeek}
+              value={fmtDecimal(metrics.avgSessionsPerWeek, 1)}
               size="small"
               change={
                 <ChangeIndicator
@@ -216,11 +220,11 @@ export const MonthlyReportEmail = ({
               }
             />
           </Column>
-          <Column style={{ width: "4%" }} />
-          <Column style={{ width: "48%" }}>
+          <Column style={{ width: '4%' }} />
+          <Column style={{ width: '48%' }}>
             <MetricCard
-              label="Total Sessions"
-              value={formatNumber(metrics.totalSessionsTracked)}
+              label={t.totalSessions}
+              value={fmtNumber(metrics.totalSessionsTracked)}
               size="small"
               change={
                 <ChangeIndicator
@@ -231,10 +235,10 @@ export const MonthlyReportEmail = ({
             />
           </Column>
         </Row>
-        <Section style={{ marginTop: "10px" }}>
+        <Section style={{ marginTop: '10px' }}>
           <MetricCard
-            label="Total Sets Tracked"
-            value={formatNumber(metrics.totalSetsTracked)}
+            label={t.totalSetsTracked}
+            value={fmtNumber(metrics.totalSetsTracked)}
             change={
               <ChangeIndicator
                 value={metrics.totalSetsTracked}
@@ -248,15 +252,15 @@ export const MonthlyReportEmail = ({
       {/* Top Muscle Groups */}
       {metrics.topMuscleGroups && metrics.topMuscleGroups.length > 0 && (
         <>
-          <Hr style={{ borderColor: colors.border, margin: "24px 0" }} />
-          <Section style={{ marginBottom: "24px" }}>
-            <SectionHeading>Top 5 Prioritized Muscle Groups</SectionHeading>
+          <Hr style={{ borderColor: colors.border, margin: '24px 0' }} />
+          <Section style={{ marginBottom: '24px' }}>
+            <SectionHeading>{t.topMuscleGroups}</SectionHeading>
             <ListBox>
               {metrics.topMuscleGroups.map((mg, idx) => (
                 <DataRow
                   key={mg.muscleGroupId}
-                  label={`${idx + 1}. ${mg.name}`}
-                  value={`${formatNumber(mg.sets)} sets`}
+                  label={t.muscleGroupLabel(idx + 1, mg.name)}
+                  value={t.setsValue(fmtNumber(mg.sets))}
                   isLast={idx === metrics.topMuscleGroups!.length - 1}
                 />
               ))}
@@ -268,32 +272,34 @@ export const MonthlyReportEmail = ({
       {/* Session Insights */}
       {hasSessionInsights && (
         <>
-          <Hr style={{ borderColor: colors.border, margin: "24px 0" }} />
-          <Section style={{ marginBottom: "24px" }}>
-            <SectionHeading>Session Insights</SectionHeading>
+          <Hr style={{ borderColor: colors.border, margin: '24px 0' }} />
+          <Section style={{ marginBottom: '24px' }}>
+            <SectionHeading>{t.sessionInsights}</SectionHeading>
             <ListBox>
               {metrics.avgReadinessEnergy && (
                 <DataRow
-                  label="Avg Readiness Energy"
-                  value={`${formatDecimal(metrics.avgReadinessEnergy)}/5`}
+                  label={t.avgReadinessEnergy}
+                  value={t.ratingValue(fmtDecimal(metrics.avgReadinessEnergy))}
                 />
               )}
               {metrics.avgReadinessMood && (
                 <DataRow
-                  label="Avg Readiness Mood"
-                  value={`${formatDecimal(metrics.avgReadinessMood)}/5`}
+                  label={t.avgReadinessMood}
+                  value={t.ratingValue(fmtDecimal(metrics.avgReadinessMood))}
                 />
               )}
               {metrics.avgSessionSatisfaction && (
                 <DataRow
-                  label="Avg Session Satisfaction"
-                  value={`${formatDecimal(metrics.avgSessionSatisfaction)}/5`}
+                  label={t.avgSessionSatisfaction}
+                  value={t.ratingValue(
+                    fmtDecimal(metrics.avgSessionSatisfaction)
+                  )}
                 />
               )}
               {metrics.avgSessionProgress && (
                 <DataRow
-                  label="Avg Session Progress"
-                  value={`${formatDecimal(metrics.avgSessionProgress)}/5`}
+                  label={t.avgSessionProgress}
+                  value={t.ratingValue(fmtDecimal(metrics.avgSessionProgress))}
                   isLast
                 />
               )}
@@ -302,12 +308,15 @@ export const MonthlyReportEmail = ({
         </>
       )}
 
-      <Hr style={{ borderColor: colors.border, margin: "24px 0" }} />
-      <SmallText muted>
-        You can manage your email preferences in the Tracked app settings.
-      </SmallText>
+      <Hr style={{ borderColor: colors.border, margin: '24px 0' }} />
+      <SmallText muted>{t.managePreferences}</SmallText>
 
-      <EmailFooter websiteUrl={websiteUrl} marketing unsubscribeUrl={unsubscribeUrl} />
+      <EmailFooter
+        websiteUrl={websiteUrl}
+        marketing
+        unsubscribeUrl={unsubscribeUrl}
+        locale={locale}
+      />
     </EmailLayout>
   );
 };

@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Section, Img } from "@react-email/components";
+import * as React from 'react';
+import { Section, Img } from '@react-email/components';
 import {
   EmailLayout,
   EmailHeader,
@@ -11,7 +11,9 @@ import {
   PrimaryButton,
   DiscordButton,
   colors,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { newFollowerMessages } from './new-follower.messages.js';
 
 interface NewFollowerEmailProps {
   userName: string;
@@ -20,38 +22,39 @@ interface NewFollowerEmailProps {
   followerAvatarUrl?: string;
   followerProfileUrl: string;
   websiteUrl?: string;
+  locale?: Locale;
 }
 
 export const NewFollowerEmail = ({
-  userName = "Alex",
-  followerName = "Jordan Smith",
-  followerUsername = "jordanfitness",
-  followerAvatarUrl = "https://cdn.trckd.ca/avatars/default.png",
-  followerProfileUrl = "tracked://app",
-  websiteUrl = "https://tracked.gg",
+  userName = 'Alex',
+  followerName = 'Jordan Smith',
+  followerUsername = 'jordanfitness',
+  followerAvatarUrl = 'https://cdn.trckd.ca/avatars/default.png',
+  followerProfileUrl = 'tracked://app',
+  websiteUrl = 'https://tracked.gg',
+  locale = 'en',
 }: NewFollowerEmailProps) => {
+  const t = newFollowerMessages[locale];
   const displayName = followerUsername
     ? `${followerName} (@${followerUsername})`
     : followerName;
 
   return (
-    <EmailLayout preview={`${followerName} started following you on Tracked`}>
+    <EmailLayout preview={t.preview(followerName)}>
       <EmailHeader />
 
-      <Heading>You Have a New Follower!</Heading>
-      <Paragraph>
-        Hi {userName}, {displayName} started following you on Tracked.
-      </Paragraph>
+      <Heading>{t.heading}</Heading>
+      <Paragraph>{t.intro(userName, displayName)}</Paragraph>
 
       {followerAvatarUrl && (
-        <Section style={{ textAlign: "center" as const, margin: "24px 0" }}>
+        <Section style={{ textAlign: 'center' as const, margin: '24px 0' }}>
           <Img
             src={followerAvatarUrl}
             width="80"
             height="80"
-            alt={followerName}
+            alt={t.avatarAlt(followerName)}
             style={{
-              borderRadius: "50%",
+              borderRadius: '50%',
               border: `2px solid ${colors.accent}`,
             }}
           />
@@ -60,21 +63,18 @@ export const NewFollowerEmail = ({
 
       <FeatureBox>
         <SmallText>
-          <strong>{displayName}</strong> is now following your fitness journey
-          and will see your public workouts and achievements.
+          <strong>{displayName}</strong>
+          {t.featureBoxSuffix}
         </SmallText>
       </FeatureBox>
 
-      <PrimaryButton href={followerProfileUrl}>View Profile</PrimaryButton>
+      <PrimaryButton href={followerProfileUrl}>{t.cta}</PrimaryButton>
 
-      <Paragraph>
-        Check out their profile to see their workouts and consider following
-        them back!
-      </Paragraph>
+      <Paragraph>{t.closing}</Paragraph>
 
       <DiscordButton />
 
-      <EmailFooter websiteUrl={websiteUrl} />
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
     </EmailLayout>
   );
 };

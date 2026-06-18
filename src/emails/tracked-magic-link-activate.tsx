@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   EmailLayout,
   EmailHeader,
@@ -7,38 +7,42 @@ import {
   PrimaryButton,
   DiscordButton,
   TextLink,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { trackedMagicLinkActivateMessages } from './tracked-magic-link-activate.messages.js';
 
 interface Props {
   activateButtonLink: string;
   websiteUrl?: string;
+  locale?: Locale;
 }
 
 export const TrackedMagicLinkActivate = ({
-  activateButtonLink = "https://tracked.gg/auth/activate?token=abc123",
-  websiteUrl = "https://tracked.gg",
-}: Props) => (
-  <EmailLayout preview="New activation requested for Tracked - The gym tracking platform">
-    <EmailHeader />
+  activateButtonLink = 'https://tracked.gg/auth/activate?token=abc123',
+  websiteUrl = 'https://tracked.gg',
+  locale = 'en',
+}: Props) => {
+  const t = trackedMagicLinkActivateMessages[locale];
+  return (
+    <EmailLayout preview={t.preview}>
+      <EmailHeader />
 
-    <Paragraph>Welcome to Tracked!</Paragraph>
-    <Paragraph>
-      Press the button below to confirm your Tracked account email. You will be
-      redirected to the app.
-    </Paragraph>
+      <Paragraph>{t.welcome}</Paragraph>
+      <Paragraph>{t.instructions}</Paragraph>
 
-    <PrimaryButton href={activateButtonLink}>Confirm Email</PrimaryButton>
+      <PrimaryButton href={activateButtonLink}>{t.cta}</PrimaryButton>
 
-    <Paragraph>
-      If this email was not expected, please ignore it. You can learn more about
-      the Tracked Training Platform by visiting our{" "}
-      <TextLink href={websiteUrl}>website</TextLink>.
-    </Paragraph>
+      <Paragraph>
+        {t.ignoreBefore}
+        <TextLink href={websiteUrl}>{t.websiteLinkText}</TextLink>
+        {t.ignoreAfter}
+      </Paragraph>
 
-    <DiscordButton />
+      <DiscordButton />
 
-    <EmailFooter websiteUrl={websiteUrl} />
-  </EmailLayout>
-);
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
+    </EmailLayout>
+  );
+};
 
 export default TrackedMagicLinkActivate;

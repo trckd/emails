@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Section, Text } from "@react-email/components";
+import * as React from 'react';
+import { Section, Text } from '@react-email/components';
 import {
   EmailLayout,
   EmailHeader,
@@ -9,13 +9,16 @@ import {
   colors,
   spacing,
   borderRadius,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { npsSurveyMessages } from './nps-survey.messages.js';
 
 interface NpsSurveyEmailProps {
   userName: string;
   surveyBaseUrl: string;
   websiteUrl?: string;
   unsubscribeUrl?: string;
+  locale?: Locale;
 }
 
 const ScoreButton = ({
@@ -25,29 +28,23 @@ const ScoreButton = ({
   score: number;
   baseUrl: string;
 }) => {
-  const getColor = () => {
-    if (score <= 6) return colors.error;
-    if (score <= 8) return colors.warning;
-    return colors.success;
-  };
-
   return (
-    <td style={{ padding: "0 2px" }}>
+    <td style={{ padding: '0 2px' }}>
       <a
         href={`${baseUrl}?score=${score}`}
         style={{
-          display: "inline-block",
-          width: "36px",
-          height: "36px",
-          lineHeight: "36px",
-          textAlign: "center" as const,
+          display: 'inline-block',
+          width: '36px',
+          height: '36px',
+          lineHeight: '36px',
+          textAlign: 'center' as const,
           backgroundColor: colors.surface,
           border: `1px solid ${colors.border}`,
           borderRadius: borderRadius.sm,
           color: colors.textPrimary,
-          fontSize: "14px",
-          fontWeight: "600",
-          textDecoration: "none",
+          fontSize: '14px',
+          fontWeight: '600',
+          textDecoration: 'none',
         }}
       >
         {score}
@@ -57,19 +54,19 @@ const ScoreButton = ({
 };
 
 export const NpsSurveyEmail = ({
-  userName = "Alex",
-  surveyBaseUrl = "https://tracked.gg/survey/nps",
-  websiteUrl = "https://tracked.gg",
-  unsubscribeUrl = "https://tracked.gg/unsubscribe",
+  userName = 'Alex',
+  surveyBaseUrl = 'https://tracked.gg/survey/nps',
+  websiteUrl = 'https://tracked.gg',
+  unsubscribeUrl = 'https://tracked.gg/unsubscribe',
+  locale = 'en',
 }: NpsSurveyEmailProps) => {
+  const t = npsSurveyMessages[locale];
   return (
-    <EmailLayout preview="Quick question: How likely are you to recommend Tracked?">
+    <EmailLayout preview={t.preview}>
       <EmailHeader />
 
-      <Heading>Quick Feedback</Heading>
-      <Paragraph>
-        Hi {userName}, we'd love your honest feedback. It only takes 10 seconds!
-      </Paragraph>
+      <Heading>{t.heading}</Heading>
+      <Paragraph>{t.intro(userName)}</Paragraph>
 
       <Section
         style={{
@@ -83,20 +80,16 @@ export const NpsSurveyEmail = ({
         <Text
           style={{
             color: colors.textPrimary,
-            fontSize: "16px",
-            fontWeight: "600",
-            textAlign: "center" as const,
-            margin: "0 0 16px 0",
+            fontSize: '16px',
+            fontWeight: '600',
+            textAlign: 'center' as const,
+            margin: '0 0 16px 0',
           }}
         >
-          How likely are you to recommend Tracked to a friend?
+          {t.question}
         </Text>
 
-        <table
-          cellPadding="0"
-          cellSpacing="0"
-          style={{ margin: "0 auto" }}
-        >
+        <table cellPadding="0" cellSpacing="0" style={{ margin: '0 auto' }}>
           <tr>
             {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((score) => (
               <ScoreButton key={score} score={score} baseUrl={surveyBaseUrl} />
@@ -107,41 +100,45 @@ export const NpsSurveyEmail = ({
         <table
           cellPadding="0"
           cellSpacing="0"
-          style={{ width: "100%", marginTop: "12px" }}
+          style={{ width: '100%', marginTop: '12px' }}
         >
           <tr>
-            <td style={{ textAlign: "left" as const }}>
+            <td style={{ textAlign: 'left' as const }}>
               <Text
                 style={{
                   color: colors.textMuted,
-                  fontSize: "12px",
-                  margin: "0",
+                  fontSize: '12px',
+                  margin: '0',
                 }}
               >
-                Not likely
+                {t.notLikely}
               </Text>
             </td>
-            <td style={{ textAlign: "right" as const }}>
+            <td style={{ textAlign: 'right' as const }}>
               <Text
                 style={{
                   color: colors.textMuted,
-                  fontSize: "12px",
-                  margin: "0",
+                  fontSize: '12px',
+                  margin: '0',
                 }}
               >
-                Very likely
+                {t.veryLikely}
               </Text>
             </td>
           </tr>
         </table>
       </Section>
 
-      <Paragraph muted style={{ textAlign: "center" as const }}>
-        Just click a number above - that's it! Your feedback helps us build a
-        better app for everyone.
+      <Paragraph muted style={{ textAlign: 'center' as const }}>
+        {t.closing}
       </Paragraph>
 
-      <EmailFooter websiteUrl={websiteUrl} marketing unsubscribeUrl={unsubscribeUrl} />
+      <EmailFooter
+        websiteUrl={websiteUrl}
+        marketing
+        unsubscribeUrl={unsubscribeUrl}
+        locale={locale}
+      />
     </EmailLayout>
   );
 };

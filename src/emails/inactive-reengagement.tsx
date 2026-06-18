@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   EmailLayout,
   EmailHeader,
@@ -9,7 +9,9 @@ import {
   FeatureList,
   PrimaryButton,
   DiscordButton,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { inactiveReengagementMessages } from './inactive-reengagement.messages.js';
 
 interface InactiveReengagementEmailProps {
   userName: string;
@@ -17,63 +19,52 @@ interface InactiveReengagementEmailProps {
   appUrl: string;
   websiteUrl?: string;
   unsubscribeUrl?: string;
+  locale?: Locale;
 }
 
 export const InactiveReengagementEmail = ({
-  userName = "Alex",
+  userName = 'Alex',
   daysInactive = 21,
-  appUrl = "tracked://app",
-  websiteUrl = "https://tracked.gg",
-  unsubscribeUrl = "https://tracked.gg/unsubscribe",
+  appUrl = 'tracked://app',
+  websiteUrl = 'https://tracked.gg',
+  unsubscribeUrl = 'https://tracked.gg/unsubscribe',
+  locale = 'en',
 }: InactiveReengagementEmailProps) => {
-  const getMessage = () => {
-    if (daysInactive >= 30) {
-      return "It's been a while! We're here ready to help you standardize your training.";
-    } else if (daysInactive >= 14) {
-      return "We've been working on exciting new features while you've been away.";
-    } else {
-      return "Rest time is up, let's get back to it.";
-    }
-  };
+  const t = inactiveReengagementMessages[locale];
+
+  const message =
+    daysInactive >= 30
+      ? t.message30
+      : daysInactive >= 14
+        ? t.message14
+        : t.messageDefault;
 
   return (
-    <EmailLayout preview={`We miss you, ${userName}! Come back to Tracked`}>
+    <EmailLayout preview={t.preview(userName)}>
       <EmailHeader />
 
-      <Heading>Come back to Tracked!</Heading>
+      <Heading>{t.heading}</Heading>
       <Paragraph>
-        Hi {userName}, it's been {daysInactive} days since your last workout.{" "}
-        {getMessage()}
+        {t.intro(userName, daysInactive)}
+        {message}
       </Paragraph>
 
-      <FeatureBox title="Pick up where you left off:">
-        <FeatureList
-          items={[
-            {
-              title: "Your data is safe",
-              description: "All your workout history and progress is still here",
-            },
-            {
-              title: "Start fresh",
-              description: "Every day is a new opportunity to build consistency",
-            },
-            {
-              title: "Stay accountable",
-              description: "Track even quick workouts to maintain momentum",
-            },
-          ]}
-        />
+      <FeatureBox title={t.featuresTitle}>
+        <FeatureList items={t.features} />
       </FeatureBox>
 
-      <PrimaryButton href={appUrl}>Get Tracking</PrimaryButton>
+      <PrimaryButton href={appUrl}>{t.cta}</PrimaryButton>
 
-      <Paragraph muted>
-        Remember: consistency beats perfection. Putting even just a little effort into tracking helps you stay accountable and see progress over time.
-      </Paragraph>
+      <Paragraph muted>{t.reminder}</Paragraph>
 
       <DiscordButton />
 
-      <EmailFooter websiteUrl={websiteUrl} marketing unsubscribeUrl={unsubscribeUrl} />
+      <EmailFooter
+        websiteUrl={websiteUrl}
+        marketing
+        unsubscribeUrl={unsubscribeUrl}
+        locale={locale}
+      />
     </EmailLayout>
   );
 };

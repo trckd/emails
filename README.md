@@ -41,6 +41,35 @@ const welcomeHtml = render(
 );
 ```
 
+### Localization (i18n)
+
+Every template accepts an optional `locale` prop and renders fully localized
+copy. Supported locales: `en` (default), `es`, `fr`, `de`, `it`, and `pt`
+(Brazilian Portuguese). These mirror the Tracked app's supported languages, so a
+user's stored language preference maps directly onto an email locale.
+
+```typescript
+import { WelcomeEmail, normalizeLocale } from '@tracked/emails';
+import { render } from '@react-email/components';
+
+// Pass a supported locale directly...
+const html = await render(<WelcomeEmail userName="Alex" locale="es" />);
+
+// ...or normalize a stored BCP-47 preference: "pt-BR" -> "pt",
+// "en-CA" -> "en"; anything unsupported or empty falls back to "en".
+const locale = normalizeLocale(user.languagePreference);
+const localized = await render(<WelcomeEmail userName="Alex" locale={locale} />);
+```
+
+Omitting `locale` renders English, so existing call sites keep working
+unchanged. Locale-aware `Intl` helpers are exported for callers that format
+their own values: `formatNumber`, `formatDecimal`, `formatMonthYear`, `plural`,
+and `intlLocale`.
+
+> A few templates accept values that the caller pre-formats (e.g. currency
+> amounts and some dates). Those pass through as-is — format them for the
+> recipient's locale before passing them in.
+
 ### Available Templates
 
 - `TrackedMagicLink` - Magic link authentication emails
@@ -69,7 +98,7 @@ const welcomeHtml = render(
 import {
   isValidEmailFormat,
   isPrivateRelayEmail,
-  shouldSendEmailTo
+  shouldSendEmailTo,
 } from '@tracked/emails';
 
 // Check email format
@@ -89,10 +118,7 @@ shouldSendEmailTo(null); // false
 #### Username Validation
 
 ```typescript
-import {
-  isAnonymousUsername,
-  getSafeDisplayName
-} from '@tracked/emails';
+import { isAnonymousUsername, getSafeDisplayName } from '@tracked/emails';
 
 // Detect auto-generated UUIDs
 isAnonymousUsername('01944f9e-8e64-7a78-9e1e-3daba7b13e9f'); // true
@@ -166,6 +192,7 @@ yarn build
 ```
 
 This will:
+
 1. Clean the `dist/` directory
 2. Compile TypeScript to ESM format
 3. Generate type definitions and source maps
