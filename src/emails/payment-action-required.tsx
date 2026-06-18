@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   DiscordButton,
   EmailFooter,
@@ -9,13 +9,16 @@ import {
   Paragraph,
   PrimaryButton,
   SmallText,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { paymentActionRequiredMessages } from './payment-action-required.messages.js';
 
 interface PaymentActionRequiredEmailProps {
   userName?: string;
   amountDue?: string;
   confirmUrl?: string;
   websiteUrl?: string;
+  locale?: Locale;
 }
 
 /**
@@ -24,39 +27,31 @@ interface PaymentActionRequiredEmailProps {
  * link where they complete authentication.
  */
 export const PaymentActionRequiredEmail = ({
-  userName = "Alex",
-  amountDue = "$49.00",
-  confirmUrl = "https://invoice.stripe.com/i/example",
-  websiteUrl = "https://tracked.gg",
+  userName = 'Alex',
+  amountDue = '$49.00', // NOTE: caller-formatted (en-US)
+  confirmUrl = 'https://invoice.stripe.com/i/example',
+  websiteUrl = 'https://tracked.gg',
+  locale = 'en',
 }: PaymentActionRequiredEmailProps) => {
+  const t = paymentActionRequiredMessages[locale];
   return (
-    <EmailLayout preview="Your bank needs you to confirm your Tracked payment">
+    <EmailLayout preview={t.preview}>
       <EmailHeader />
 
-      <Heading>Confirm your payment</Heading>
-      <Paragraph>
-        Hi {userName}, your bank needs you to verify your recent Tracked payment
-        of {amountDue} before it can go through (this is 3D Secure, a standard
-        security check).
-      </Paragraph>
+      <Heading>{t.heading}</Heading>
+      <Paragraph>{t.intro(userName, amountDue)}</Paragraph>
 
-      <FeatureBox title="One quick step:">
-        <SmallText>
-          • Tap the button below and follow your bank's prompt to authenticate
-          the payment
-        </SmallText>
+      <FeatureBox title={t.stepTitle}>
+        <SmallText>{t.stepDetail}</SmallText>
       </FeatureBox>
 
-      <PrimaryButton href={confirmUrl}>Confirm payment</PrimaryButton>
+      <PrimaryButton href={confirmUrl}>{t.cta}</PrimaryButton>
 
-      <Paragraph>
-        Until this is confirmed, your renewal stays pending — it only takes a
-        moment, and your dashboard access continues in the meantime.
-      </Paragraph>
+      <Paragraph>{t.pending}</Paragraph>
 
       <DiscordButton />
 
-      <EmailFooter websiteUrl={websiteUrl} />
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
     </EmailLayout>
   );
 };

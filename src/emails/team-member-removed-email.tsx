@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   EmailLayout,
   EmailHeader,
@@ -7,37 +7,39 @@ import {
   Paragraph,
   DiscordButton,
   TextLink,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { teamMemberRemovedMessages } from './team-member-removed-email.messages.js';
 
 interface TeamMemberRemovedEmailProps {
   teamName?: string;
   websiteUrl?: string;
   teamImage?: string;
+  locale?: Locale;
 }
 
 export const TeamMemberRemovedEmail = ({
-  teamName = "Team Tracked Training",
-  websiteUrl = "https://tracked.gg",
+  teamName = 'Team Tracked Training',
+  websiteUrl = 'https://tracked.gg',
+  locale = 'en',
 }: TeamMemberRemovedEmailProps) => {
+  const t = teamMemberRemovedMessages[locale];
   return (
-    <EmailLayout preview="Removed from the team">
+    <EmailLayout preview={t.preview(teamName)}>
       <EmailHeader />
 
-      <Heading>Team membership revoked</Heading>
-      <Paragraph>
-        The team owner has removed you from the team. If you believe this was a
-        mistake, please contact the team owner.
-      </Paragraph>
+      <Heading>{t.heading(teamName)}</Heading>
+      <Paragraph>{t.intro(teamName)}</Paragraph>
 
       <Paragraph>
-        If this email was not expected, please ignore it. You can learn more
-        about the Tracked Training Platform by visiting our{" "}
-        <TextLink href={websiteUrl}>website</TextLink>.
+        {t.ignoreNoticePrefix}
+        <TextLink href={websiteUrl}>{t.websiteLink}</TextLink>
+        {t.ignoreNoticeSuffix}
       </Paragraph>
 
       <DiscordButton />
 
-      <EmailFooter websiteUrl={websiteUrl} />
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
     </EmailLayout>
   );
 };

@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Img } from "@react-email/components";
+import * as React from 'react';
+import { Img } from '@react-email/components';
 import {
   EmailLayout,
   EmailHeader,
@@ -9,7 +9,9 @@ import {
   PrimaryButton,
   DiscordButton,
   TextLink,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { teamInviteMessages } from './team-invite.messages.js';
 
 interface TeamInviteEmailProps {
   teamName?: string;
@@ -18,17 +20,20 @@ interface TeamInviteEmailProps {
   websiteUrl?: string;
   teamImage?: string;
   invitationLink?: string;
+  locale?: Locale;
 }
 
 export const TeamInviteEmail = ({
-  teamName = "Team Tracked Training",
-  teamRole = "Athlete",
-  websiteUrl = "https://tracked.gg",
-  teamImage = "https://cdn.trckd.ca/teams/default.png",
-  invitationLink = "https://tracked.gg/team/invite/abc123",
+  teamName = 'Team Tracked Training',
+  teamRole = 'Athlete',
+  websiteUrl = 'https://tracked.gg',
+  teamImage = 'https://cdn.trckd.ca/teams/default.png',
+  invitationLink = 'https://tracked.gg/team/invite/abc123',
+  locale = 'en',
 }: TeamInviteEmailProps) => {
+  const t = teamInviteMessages[locale];
   return (
-    <EmailLayout preview={`Team Invite for ${teamName}`}>
+    <EmailLayout preview={t.preview(teamName)}>
       <EmailHeader />
 
       {teamImage && (
@@ -37,31 +42,32 @@ export const TeamInviteEmail = ({
           height="70"
           alt={teamName}
           style={{
-            margin: "0 auto 24px",
-            display: "block",
+            margin: '0 auto 24px',
+            display: 'block',
           }}
         />
       )}
 
-      <Heading>Invitation to join {teamName}</Heading>
+      <Heading>{t.heading(teamName)}</Heading>
       <Paragraph>
-        Join the team as a <strong>{teamRole}</strong> by pressing the button
-        below.
+        {t.joinAsPrefix}
+        <strong>{teamRole}</strong>
+        {t.joinAsSuffix}
       </Paragraph>
 
-      <PrimaryButton href={invitationLink || "#"} fullWidth>
-        Join Team
+      <PrimaryButton href={invitationLink || '#'} fullWidth>
+        {t.cta}
       </PrimaryButton>
 
       <Paragraph>
-        If this email was not expected, please ignore it. You can learn more
-        about the Tracked Training Platform by visiting our{" "}
-        <TextLink href={websiteUrl}>website</TextLink>.
+        {t.ignoreNoticePrefix}
+        <TextLink href={websiteUrl}>{t.websiteLink}</TextLink>
+        {t.ignoreNoticeSuffix}
       </Paragraph>
 
       <DiscordButton />
 
-      <EmailFooter websiteUrl={websiteUrl} />
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
     </EmailLayout>
   );
 };

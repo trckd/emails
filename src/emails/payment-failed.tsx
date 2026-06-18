@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   DiscordButton,
   EmailFooter,
@@ -9,7 +9,9 @@ import {
   Paragraph,
   PrimaryButton,
   SmallText,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { paymentFailedMessages } from './payment-failed.messages.js';
 
 interface PaymentFailedEmailProps {
   userName?: string;
@@ -17,6 +19,7 @@ interface PaymentFailedEmailProps {
   updatePaymentUrl?: string;
   graceEndsDate?: string;
   websiteUrl?: string;
+  locale?: Locale;
 }
 
 /**
@@ -24,46 +27,36 @@ interface PaymentFailedEmailProps {
  * through the grace window — nudge them to update their card before it ends.
  */
 export const PaymentFailedEmail = ({
-  userName = "Alex",
-  amountDue = "$49.00",
-  updatePaymentUrl = "https://dashboard.tracked.gg/subscription",
-  graceEndsDate = "January 22, 2025",
-  websiteUrl = "https://tracked.gg",
+  userName = 'Alex',
+  amountDue = '$49.00', // NOTE: caller-formatted (en-US)
+  updatePaymentUrl = 'https://dashboard.tracked.gg/subscription',
+  graceEndsDate = 'January 22, 2025', // NOTE: caller-formatted (en-US)
+  websiteUrl = 'https://tracked.gg',
+  locale = 'en',
 }: PaymentFailedEmailProps) => {
+  const t = paymentFailedMessages[locale];
   return (
-    <EmailLayout preview="We couldn't process your Tracked payment — update your card to keep access">
+    <EmailLayout preview={t.preview}>
       <EmailHeader />
 
-      <Heading>We couldn't process your payment</Heading>
-      <Paragraph>
-        Hi {userName}, your recent Tracked subscription payment of {amountDue}{" "}
-        didn't go through. This is usually an expired card or insufficient funds.
-      </Paragraph>
+      <Heading>{t.heading}</Heading>
+      <Paragraph>{t.intro(userName, amountDue)}</Paragraph>
 
-      <FeatureBox title="What you need to do:">
-        <SmallText style={{ marginBottom: "4px" }}>
-          • Update your payment method to keep your coaching dashboard
+      <FeatureBox title={t.todoTitle}>
+        <SmallText style={{ marginBottom: '4px' }}>{t.todoUpdate}</SmallText>
+        <SmallText style={{ marginBottom: '4px' }}>
+          {t.todoGrace(graceEndsDate)}
         </SmallText>
-        <SmallText style={{ marginBottom: "4px" }}>
-          • You'll keep full access until {graceEndsDate}
-        </SmallText>
-        <SmallText>
-          • We'll retry the charge automatically once your card is updated
-        </SmallText>
+        <SmallText>{t.todoRetry}</SmallText>
       </FeatureBox>
 
-      <PrimaryButton href={updatePaymentUrl}>
-        Update payment method
-      </PrimaryButton>
+      <PrimaryButton href={updatePaymentUrl}>{t.cta}</PrimaryButton>
 
-      <Paragraph>
-        Already updated your card? You can ignore this — the next retry will go
-        through.
-      </Paragraph>
+      <Paragraph>{t.alreadyUpdated}</Paragraph>
 
       <DiscordButton />
 
-      <EmailFooter websiteUrl={websiteUrl} />
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
     </EmailLayout>
   );
 };

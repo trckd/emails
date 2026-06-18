@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   EmailLayout,
   EmailHeader,
@@ -6,7 +6,9 @@ import {
   Heading,
   Paragraph,
   PrimaryButton,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { prospectConvertedCoachMessages } from './prospect-converted-coach.messages.js';
 
 interface ProspectConvertedCoachEmailProps {
   coachName: string;
@@ -14,34 +16,31 @@ interface ProspectConvertedCoachEmailProps {
   clientEmail?: string;
   clientProfileUrl: string;
   websiteUrl?: string;
+  locale?: Locale;
 }
 
 export const ProspectConvertedCoachEmail = ({
-  coachName = "Coach",
-  clientName = "New Client",
+  coachName = 'Coach',
+  clientName = 'New Client',
   clientEmail,
-  clientProfileUrl = "https://dashboard.tracked.training/clients",
-  websiteUrl = "https://tracked.gg",
+  clientProfileUrl = 'https://dashboard.tracked.training/clients',
+  websiteUrl = 'https://tracked.gg',
+  locale = 'en',
 }: ProspectConvertedCoachEmailProps) => {
+  const t = prospectConvertedCoachMessages[locale];
+  const emailSuffix = clientEmail ? ` (${clientEmail})` : '';
   return (
-    <EmailLayout
-      preview={`${clientName} has been added as your client on Tracked`}
-    >
+    <EmailLayout preview={t.preview(clientName)}>
       <EmailHeader />
 
-      <Heading>Client Accepted</Heading>
-      <Paragraph>
-        Hi {coachName}, this is a confirmation that you've accepted{" "}
-        {clientName}
-        {clientEmail ? ` (${clientEmail})` : ""} as a client. They've been
-        notified and can now see you as their coach in the app.
-      </Paragraph>
+      <Heading>{t.heading}</Heading>
+      <Paragraph>{t.intro(coachName, clientName, emailSuffix)}</Paragraph>
 
       <PrimaryButton href={clientProfileUrl} fullWidth>
-        View Client Profile
+        {t.cta}
       </PrimaryButton>
 
-      <EmailFooter websiteUrl={websiteUrl} />
+      <EmailFooter websiteUrl={websiteUrl} locale={locale} />
     </EmailLayout>
   );
 };
