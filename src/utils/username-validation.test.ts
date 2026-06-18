@@ -43,9 +43,9 @@ describe('username-validation', () => {
 
   describe('getSafeDisplayName', () => {
     it('should prefer real username over other names', () => {
-      expect(
-        getSafeDisplayName('john_doe', 'John', 'John Doe Smith')
-      ).toBe('john_doe');
+      expect(getSafeDisplayName('john_doe', 'John', 'John Doe Smith')).toBe(
+        'john_doe'
+      );
       expect(getSafeDisplayName('athlete123', 'Jane', 'Jane Smith')).toBe(
         'athlete123'
       );
@@ -102,9 +102,7 @@ describe('username-validation', () => {
 
       // New user with UUID, given name
       const uuid = '01944f9e-8e64-7a78-9e1e-3daba7b13e9f';
-      expect(getSafeDisplayName(uuid, 'Sarah', 'Sarah Williams')).toBe(
-        'Sarah'
-      );
+      expect(getSafeDisplayName(uuid, 'Sarah', 'Sarah Williams')).toBe('Sarah');
 
       // User with only full name
       expect(getSafeDisplayName(uuid, null, 'Robert Brown')).toBe(

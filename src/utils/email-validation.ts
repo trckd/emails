@@ -20,12 +20,12 @@
  */
 export function isPrivateRelayEmail(email: string): boolean {
   const privateRelayPatterns = [
-    "@privaterelay.appleid.com",
+    '@privaterelay.appleid.com',
     // Note: @icloud.com can be real emails, only filter if it's clearly a relay
   ];
 
   return privateRelayPatterns.some((pattern) =>
-    email.toLowerCase().includes(pattern),
+    email.toLowerCase().includes(pattern)
   );
 }
 
