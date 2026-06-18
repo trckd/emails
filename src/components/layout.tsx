@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   Body,
   Container,
@@ -10,12 +10,14 @@ import {
   Preview,
   Section,
   Text,
-} from "@react-email/components";
-import { colors, typography, spacing } from "./tokens.js";
-import { AppStoreButtons } from "./interactive.js";
+} from '@react-email/components';
+import { colors, typography, spacing } from './tokens.js';
+import { AppStoreButtons } from './interactive.js';
+import type { Locale } from '../i18n/locales.js';
+import { commonMessages } from './messages.js';
 
-const baseUrl = "https://tracked.gg/android-chrome-192x192.png";
-const defaultWebsiteUrl = "https://tracked.gg";
+const baseUrl = 'https://tracked.gg/android-chrome-192x192.png';
+const defaultWebsiteUrl = 'https://tracked.gg';
 
 // ============================================
 // EmailLayout - Main wrapper component
@@ -49,13 +51,13 @@ const mainStyle = {
 
 const containerStyle = {
   backgroundColor: colors.background,
-  margin: "0 auto",
-  padding: "20px 0 48px",
-  maxWidth: "600px",
+  margin: '0 auto',
+  padding: '20px 0 48px',
+  maxWidth: '600px',
 };
 
 const boxStyle = {
-  padding: "0 24px",
+  padding: '0 24px',
 };
 
 // ============================================
@@ -68,12 +70,16 @@ interface EmailHeaderProps {
 export const EmailHeader = ({ showDivider = true }: EmailHeaderProps) => {
   return (
     <>
-      <table cellPadding="0" cellSpacing="0" style={{ marginBottom: spacing.sm }}>
+      <table
+        cellPadding="0"
+        cellSpacing="0"
+        style={{ marginBottom: spacing.sm }}
+      >
         <tr>
-          <td style={{ verticalAlign: "middle" }}>
+          <td style={{ verticalAlign: 'middle' }}>
             <Img src={baseUrl} width="28" height="28" alt="Tracked" />
           </td>
-          <td style={{ verticalAlign: "middle", paddingLeft: "6px" }}>
+          <td style={{ verticalAlign: 'middle', paddingLeft: '6px' }}>
             <Text style={logoStyle}>TRACKED</Text>
           </td>
         </tr>
@@ -84,19 +90,19 @@ export const EmailHeader = ({ showDivider = true }: EmailHeaderProps) => {
 };
 
 const logoStyle = {
-  fontSize: "28px",
-  fontWeight: "900" as const,
+  fontSize: '28px',
+  fontWeight: '900' as const,
   fontFamily: typography.brandFont,
   color: colors.textPrimary,
-  margin: "0",
-  lineHeight: "32px",
-  letterSpacing: "-0.5px",
+  margin: '0',
+  lineHeight: '32px',
+  letterSpacing: '-0.5px',
 };
 
 const headerDividerStyle = {
   borderColor: colors.border,
   margin: `${spacing.lg} 0`,
-  borderWidth: "1px",
+  borderWidth: '1px',
 };
 
 // ============================================
@@ -106,47 +112,47 @@ interface EmailFooterProps {
   websiteUrl?: string;
   marketing?: boolean;
   unsubscribeUrl?: string;
+  locale?: Locale;
 }
 
 export const EmailFooter = ({
   websiteUrl = defaultWebsiteUrl,
   marketing = false,
   unsubscribeUrl,
+  locale = 'en',
 }: EmailFooterProps) => {
+  const t = commonMessages[locale].footer;
   return (
     <>
       <Hr style={footerDividerStyle} />
-      <AppStoreButtons />
+      <AppStoreButtons locale={locale} />
       <Text style={footerTextStyle}>
-        Copyright © {new Date().getFullYear()} Tracked Training Platform Inc.{" "}
-        <br />
-        9101 Horne Street, Vancouver, BC
+        {t.copyright(new Date().getFullYear())} <br />
+        {t.address}
       </Text>
-      <Section style={{ textAlign: "center" as const }}>
+      <Section style={{ textAlign: 'center' as const }}>
         <Link href={`${websiteUrl}/terms`} style={footerLinkStyle}>
-          Terms
+          {t.terms}
         </Link>
         <Text style={footerDividerTextStyle}> | </Text>
         <Link href={`${websiteUrl}/privacy`} style={footerLinkStyle}>
-          Privacy
+          {t.privacy}
         </Link>
         <Text style={footerDividerTextStyle}> | </Text>
         <Link href={`${websiteUrl}/support`} style={footerLinkStyle}>
-          Support
+          {t.support}
         </Link>
         {marketing && unsubscribeUrl && (
           <>
             <Text style={footerDividerTextStyle}> | </Text>
             <Link href={unsubscribeUrl} style={footerLinkStyle}>
-              Unsubscribe
+              {t.unsubscribe}
             </Link>
           </>
         )}
       </Section>
       <Text style={footerDisclaimerStyle}>
-        {marketing
-          ? "You're receiving this email because you opted in to marketing communications from Tracked."
-          : "This is a service notification by the Tracked Training Platform."}
+        {marketing ? t.marketingDisclaimer : t.serviceDisclaimer}
       </Text>
     </>
   );
@@ -155,33 +161,33 @@ export const EmailFooter = ({
 const footerDividerStyle = {
   borderColor: colors.border,
   margin: `${spacing.lg} 0`,
-  borderWidth: "1px",
+  borderWidth: '1px',
 };
 
 const footerTextStyle = {
   color: colors.textMuted,
-  fontSize: "12px",
-  lineHeight: "16px",
-  textAlign: "center" as const,
+  fontSize: '12px',
+  lineHeight: '16px',
+  textAlign: 'center' as const,
 };
 
 const footerLinkStyle = {
   color: colors.textMuted,
-  fontSize: "12px",
-  textDecoration: "none",
+  fontSize: '12px',
+  textDecoration: 'none',
 };
 
 const footerDividerTextStyle = {
   color: colors.textMuted,
-  fontSize: "12px",
-  display: "inline" as const,
+  fontSize: '12px',
+  display: 'inline' as const,
 };
 
 const footerDisclaimerStyle = {
   color: colors.textMuted,
-  fontSize: "12px",
-  lineHeight: "16px",
-  textAlign: "center" as const,
+  fontSize: '12px',
+  lineHeight: '16px',
+  textAlign: 'center' as const,
   marginTop: spacing.md,
 };
 
@@ -194,7 +200,9 @@ interface ContentSectionProps {
 }
 
 export const ContentSection = ({ children, style }: ContentSectionProps) => {
-  return <Section style={{ marginBottom: spacing.lg, ...style }}>{children}</Section>;
+  return (
+    <Section style={{ marginBottom: spacing.lg, ...style }}>{children}</Section>
+  );
 };
 
 // ============================================
@@ -210,7 +218,7 @@ export const Divider = ({ accent = false }: DividerProps) => {
       style={{
         borderColor: accent ? colors.borderAccent : colors.border,
         margin: `${spacing.lg} 0`,
-        borderWidth: "1px",
+        borderWidth: '1px',
       }}
     />
   );

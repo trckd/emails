@@ -24,7 +24,7 @@
  * ```
  */
 export function isAnonymousUsername(
-  username: string | null | undefined,
+  username: string | null | undefined
 ): boolean {
   if (!username) {
     return true;
@@ -67,7 +67,7 @@ export function getSafeDisplayName(
   username: string | null | undefined,
   givenName: string | null | undefined,
   name: string | null | undefined,
-  fallback: string = "there",
+  fallback: string = 'there'
 ): string {
   // Try real username first (skip if it's a UUID)
   if (username && !isAnonymousUsername(username)) {

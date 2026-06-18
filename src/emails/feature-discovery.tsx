@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Section, Text } from "@react-email/components";
+import * as React from 'react';
+import { Section, Text } from '@react-email/components';
 import {
   EmailLayout,
   EmailHeader,
@@ -12,7 +12,9 @@ import {
   PrimaryButton,
   DiscordButton,
   colors,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { featureDiscoveryMessages } from './feature-discovery.messages.js';
 
 interface FeatureDiscoveryEmailProps {
   userName?: string;
@@ -22,53 +24,51 @@ interface FeatureDiscoveryEmailProps {
   featureUrl?: string;
   websiteUrl?: string;
   unsubscribeUrl?: string;
+  locale?: Locale;
 }
 
 export const FeatureDiscoveryEmail = ({
-  userName = "Alex",
-  featureName = "Progress Photos",
-  featureDescription = "Track your transformation visually with our new Progress Photos feature. Take photos, compare side-by-side, and see your hard work paying off over time.",
+  userName = 'Alex',
+  featureName = 'Progress Photos',
+  featureDescription = 'Track your transformation visually with our new Progress Photos feature. Take photos, compare side-by-side, and see your hard work paying off over time.',
   featureBenefits = [
-    "Compare photos side-by-side to see your progress",
-    "Automatic privacy controls - your photos are only visible to you",
-    "Set reminders to take consistent progress photos",
-    "Track multiple angles and body positions",
+    'Compare photos side-by-side to see your progress',
+    'Automatic privacy controls - your photos are only visible to you',
+    'Set reminders to take consistent progress photos',
+    'Track multiple angles and body positions',
   ],
-  featureUrl = "tracked://physique-photos",
-  websiteUrl = "https://tracked.gg",
+  featureUrl = 'tracked://physique-photos',
+  websiteUrl = 'https://tracked.gg',
   unsubscribeUrl,
+  locale = 'en',
 }: FeatureDiscoveryEmailProps) => {
+  const t = featureDiscoveryMessages[locale];
   return (
-    <EmailLayout preview={`Discover ${featureName} on Tracked`}>
+    <EmailLayout preview={t.preview(featureName)}>
       <EmailHeader />
 
-      <Section style={{ textAlign: "center" as const, margin: "16px 0" }}>
-        <Text style={{ fontSize: "36px", margin: "0" }}>💡</Text>
+      <Section style={{ textAlign: 'center' as const, margin: '16px 0' }}>
+        <Text style={{ fontSize: '36px', margin: '0' }}>💡</Text>
       </Section>
 
-      <Heading style={{ textAlign: "center" as const }}>
-        Unlock More with Tracked
-      </Heading>
-      <Paragraph>
-        Hi {userName}, we noticed you haven't tried {featureName} yet - a
-        powerful feature that could take your training to the next level.
-      </Paragraph>
+      <Heading style={{ textAlign: 'center' as const }}>{t.heading}</Heading>
+      <Paragraph>{t.intro(userName, featureName)}</Paragraph>
 
       <Section
         style={{
           backgroundColor: colors.surface,
-          padding: "20px 24px",
-          borderRadius: "8px",
-          margin: "24px 0",
+          padding: '20px 24px',
+          borderRadius: '8px',
+          margin: '24px 0',
           borderLeft: `4px solid ${colors.accent}`,
         }}
       >
         <Text
           style={{
             color: colors.accent,
-            fontSize: "18px",
-            fontWeight: "bold" as const,
-            marginBottom: "8px",
+            fontSize: '18px',
+            fontWeight: 'bold' as const,
+            marginBottom: '8px',
           }}
         >
           {featureName}
@@ -76,9 +76,9 @@ export const FeatureDiscoveryEmail = ({
         <Text
           style={{
             color: colors.textSecondary,
-            fontSize: "15px",
-            lineHeight: "22px",
-            margin: "0",
+            fontSize: '15px',
+            lineHeight: '22px',
+            margin: '0',
           }}
         >
           {featureDescription}
@@ -86,23 +86,25 @@ export const FeatureDiscoveryEmail = ({
       </Section>
 
       {featureBenefits.length > 0 && (
-        <FeatureBox title="Why you'll love it:">
+        <FeatureBox title={t.benefitsTitle}>
           <FeatureList
             items={featureBenefits.map((benefit) => ({ title: benefit }))}
           />
         </FeatureBox>
       )}
 
-      <PrimaryButton href={featureUrl}>Try {featureName}</PrimaryButton>
+      <PrimaryButton href={featureUrl}>{t.cta(featureName)}</PrimaryButton>
 
-      <SmallText muted>
-        We're constantly adding new features to help you reach your fitness
-        goals. Stay tuned for more updates!
-      </SmallText>
+      <SmallText muted>{t.closing}</SmallText>
 
       <DiscordButton />
 
-      <EmailFooter websiteUrl={websiteUrl} marketing unsubscribeUrl={unsubscribeUrl} />
+      <EmailFooter
+        websiteUrl={websiteUrl}
+        marketing
+        unsubscribeUrl={unsubscribeUrl}
+        locale={locale}
+      />
     </EmailLayout>
   );
 };

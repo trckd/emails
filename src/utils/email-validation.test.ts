@@ -11,9 +11,9 @@ describe('email-validation', () => {
       expect(isPrivateRelayEmail('6g65mj8rd5@privaterelay.appleid.com')).toBe(
         true
       );
-      expect(
-        isPrivateRelayEmail('randomstring@privaterelay.appleid.com')
-      ).toBe(true);
+      expect(isPrivateRelayEmail('randomstring@privaterelay.appleid.com')).toBe(
+        true
+      );
     });
 
     it('should allow normal emails', () => {
@@ -58,9 +58,9 @@ describe('email-validation', () => {
     });
 
     it('should reject private relay emails', () => {
-      expect(
-        shouldSendEmailTo('randomstring@privaterelay.appleid.com')
-      ).toBe(false);
+      expect(shouldSendEmailTo('randomstring@privaterelay.appleid.com')).toBe(
+        false
+      );
     });
 
     it('should reject invalid email formats', () => {

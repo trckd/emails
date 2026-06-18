@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Section, Text } from "@react-email/components";
+import * as React from 'react';
+import { Section, Text } from '@react-email/components';
 import {
   EmailLayout,
   EmailHeader,
@@ -10,7 +10,10 @@ import {
   DiscordButton,
   colors,
   spacing,
-} from "../components/index.js";
+} from '../components/index.js';
+import type { Locale } from '../i18n/locales.js';
+import { formatNumber } from '../i18n/format.js';
+import { anniversaryMessages } from './anniversary.messages.js';
 
 interface AnniversaryEmailProps {
   userName: string;
@@ -20,74 +23,74 @@ interface AnniversaryEmailProps {
   appUrl: string;
   websiteUrl?: string;
   unsubscribeUrl?: string;
+  locale?: Locale;
 }
 
 export const AnniversaryEmail = ({
-  userName = "Alex",
+  userName = 'Alex',
   yearsOnPlatform = 1,
   totalWorkouts = 156,
-  totalVolume = "1,250,000 lbs",
-  appUrl = "tracked://bodyweight",
-  websiteUrl = "https://tracked.gg",
-  unsubscribeUrl = "https://tracked.gg/unsubscribe",
+  // NOTE: caller-formatted (en-US)
+  totalVolume = '1,250,000 lbs',
+  appUrl = 'tracked://bodyweight',
+  websiteUrl = 'https://tracked.gg',
+  unsubscribeUrl = 'https://tracked.gg/unsubscribe',
+  locale = 'en',
 }: AnniversaryEmailProps) => {
-  const yearText = yearsOnPlatform === 1 ? "1 Year" : `${yearsOnPlatform} Years`;
+  const t = anniversaryMessages[locale];
+  const yearsLabel = t.yearsLabel(yearsOnPlatform);
 
   return (
-    <EmailLayout preview={`Happy ${yearText} Anniversary on Tracked!`}>
+    <EmailLayout preview={t.preview(yearsLabel)}>
       <EmailHeader />
 
-      <Heading>Happy {yearText} Anniversary!</Heading>
-      <Paragraph>
-        Congratulations {userName}! Today marks {yearsOnPlatform}{" "}
-        {yearsOnPlatform === 1 ? "year" : "years"} since you joined Tracked.
-        Thank you for being part of our community!
-      </Paragraph>
+      <Heading>{t.heading(yearsLabel)}</Heading>
+      <Paragraph>{t.intro(userName, yearsOnPlatform)}</Paragraph>
 
       {(totalWorkouts || totalVolume) && (
         <Section
           style={{
             backgroundColor: colors.surface,
             padding: spacing.lg,
-            borderRadius: "8px",
+            borderRadius: '8px',
             margin: `${spacing.lg} 0`,
             border: `1px solid ${colors.border}`,
-            textAlign: "center" as const,
+            textAlign: 'center' as const,
           }}
         >
           <Text
             style={{
               color: colors.accent,
-              fontSize: "14px",
-              fontWeight: "bold",
-              textTransform: "uppercase" as const,
-              letterSpacing: "0.5px",
-              margin: "0 0 16px 0",
+              fontSize: '14px',
+              fontWeight: 'bold',
+              textTransform: 'uppercase' as const,
+              letterSpacing: '0.5px',
+              margin: '0 0 16px 0',
             }}
           >
-            Your Journey So Far
+            {t.journeyTitle}
           </Text>
           {totalWorkouts && (
             <Text
               style={{
                 color: colors.textPrimary,
-                fontSize: "32px",
-                fontWeight: "bold",
-                margin: "0 0 4px 0",
+                fontSize: '32px',
+                fontWeight: 'bold',
+                margin: '0 0 4px 0',
               }}
             >
-              {totalWorkouts.toLocaleString()}
+              {formatNumber(totalWorkouts, locale)}
             </Text>
           )}
           {totalWorkouts && (
             <Text
               style={{
                 color: colors.textSecondary,
-                fontSize: "14px",
-                margin: "0 0 16px 0",
+                fontSize: '14px',
+                margin: '0 0 16px 0',
               }}
             >
-              workouts logged
+              {t.workoutsLogged}
             </Text>
           )}
           {totalVolume && (
@@ -95,9 +98,9 @@ export const AnniversaryEmail = ({
               <Text
                 style={{
                   color: colors.textPrimary,
-                  fontSize: "32px",
-                  fontWeight: "bold",
-                  margin: "0 0 4px 0",
+                  fontSize: '32px',
+                  fontWeight: 'bold',
+                  margin: '0 0 4px 0',
                 }}
               >
                 {totalVolume}
@@ -105,27 +108,29 @@ export const AnniversaryEmail = ({
               <Text
                 style={{
                   color: colors.textSecondary,
-                  fontSize: "14px",
-                  margin: "0",
+                  fontSize: '14px',
+                  margin: '0',
                 }}
               >
-                total volume lifted
+                {t.totalVolumeLifted}
               </Text>
             </>
           )}
         </Section>
       )}
 
-      <Paragraph>
-        Here's to another year of crushing goals and getting stronger. Keep up
-        the amazing work!
-      </Paragraph>
+      <Paragraph>{t.closing}</Paragraph>
 
-      <PrimaryButton href={appUrl}>View Your Progress</PrimaryButton>
+      <PrimaryButton href={appUrl}>{t.cta}</PrimaryButton>
 
       <DiscordButton />
 
-      <EmailFooter websiteUrl={websiteUrl} marketing unsubscribeUrl={unsubscribeUrl} />
+      <EmailFooter
+        websiteUrl={websiteUrl}
+        marketing
+        unsubscribeUrl={unsubscribeUrl}
+        locale={locale}
+      />
     </EmailLayout>
   );
 };

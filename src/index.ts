@@ -1,49 +1,49 @@
 // Email templates
-import { AnniversaryEmail } from "./emails/anniversary.js";
-import { AppReviewRequestEmail } from "./emails/app-review-request.js";
-import { BodyweightGoalReachedEmail } from "./emails/bodyweight-goal-reached.js";
-import { ClientInactiveAlertEmail } from "./emails/client-inactive-alert.js";
-import { ClientOnboardedEmail } from "./emails/client-onboarded.js";
-import { CoachInviteEmail } from "./emails/coach-invite.js";
-import { CoachRemovedClientEmail } from "./emails/coach-removed-client.js";
-import { DirectMessageEmail } from "./emails/direct-message.js";
-import { FeatureDiscoveryEmail } from "./emails/feature-discovery.js";
-import { FirstWorkoutAssignedEmail } from "./emails/first-workout-assigned.js";
-import { FirstWorkoutCompletedEmail } from "./emails/first-workout-completed.js";
-import { InactiveReengagementEmail } from "./emails/inactive-reengagement.js";
-import { MonthlyReportEmail } from "./emails/monthly-report.js";
-import { NewFollowerEmail } from "./emails/new-follower.js";
-import { NpsSurveyEmail } from "./emails/nps-survey.js";
-import { ProspectConvertedClientEmail } from "./emails/prospect-converted-client.js";
-import { ProspectConvertedCoachEmail } from "./emails/prospect-converted-coach.js";
-import { PaymentActionRequiredEmail } from "./emails/payment-action-required.js";
-import { PaymentFailedEmail } from "./emails/payment-failed.js";
-import { PaymentFinalNoticeEmail } from "./emails/payment-final-notice.js";
-import { SubscriptionCanceledEmail } from "./emails/subscription-canceled.js";
-import { SupportEmail } from "./emails/support-email.js";
-import { TrialConvertedEmail } from "./emails/trial-converted.js";
-import { TrialEndingSoonEmail } from "./emails/trial-ending-soon.js";
-import { TrialExpiredEmail } from "./emails/trial-expired.js";
-import { TrialMidpointEmail } from "./emails/trial-midpoint.js";
-import { TrialStartedEmail } from "./emails/trial-started.js";
-import { TeamInviteEmail } from "./emails/team-invite.js";
-import { TeamMemberRemovedEmail } from "./emails/team-member-removed-email.js";
-import { TrackedMagicLink } from "./emails/tracked-magic-link.js";
-import { TrackedMagicLinkActivate } from "./emails/tracked-magic-link-activate.js";
-import { WeeklyProgressDigestEmail } from "./emails/weekly-progress-digest.js";
-import { WeekOneCheckinEmail } from "./emails/week-one-checkin.js";
-import { WelcomeEmail } from "./emails/welcome.js";
+import { AnniversaryEmail } from './emails/anniversary.js';
+import { AppReviewRequestEmail } from './emails/app-review-request.js';
+import { BodyweightGoalReachedEmail } from './emails/bodyweight-goal-reached.js';
+import { ClientInactiveAlertEmail } from './emails/client-inactive-alert.js';
+import { ClientOnboardedEmail } from './emails/client-onboarded.js';
+import { CoachInviteEmail } from './emails/coach-invite.js';
+import { CoachRemovedClientEmail } from './emails/coach-removed-client.js';
+import { DirectMessageEmail } from './emails/direct-message.js';
+import { FeatureDiscoveryEmail } from './emails/feature-discovery.js';
+import { FirstWorkoutAssignedEmail } from './emails/first-workout-assigned.js';
+import { FirstWorkoutCompletedEmail } from './emails/first-workout-completed.js';
+import { InactiveReengagementEmail } from './emails/inactive-reengagement.js';
+import { MonthlyReportEmail } from './emails/monthly-report.js';
+import { NewFollowerEmail } from './emails/new-follower.js';
+import { NpsSurveyEmail } from './emails/nps-survey.js';
+import { ProspectConvertedClientEmail } from './emails/prospect-converted-client.js';
+import { ProspectConvertedCoachEmail } from './emails/prospect-converted-coach.js';
+import { PaymentActionRequiredEmail } from './emails/payment-action-required.js';
+import { PaymentFailedEmail } from './emails/payment-failed.js';
+import { PaymentFinalNoticeEmail } from './emails/payment-final-notice.js';
+import { SubscriptionCanceledEmail } from './emails/subscription-canceled.js';
+import { SupportEmail } from './emails/support-email.js';
+import { TrialConvertedEmail } from './emails/trial-converted.js';
+import { TrialEndingSoonEmail } from './emails/trial-ending-soon.js';
+import { TrialExpiredEmail } from './emails/trial-expired.js';
+import { TrialMidpointEmail } from './emails/trial-midpoint.js';
+import { TrialStartedEmail } from './emails/trial-started.js';
+import { TeamInviteEmail } from './emails/team-invite.js';
+import { TeamMemberRemovedEmail } from './emails/team-member-removed-email.js';
+import { TrackedMagicLink } from './emails/tracked-magic-link.js';
+import { TrackedMagicLinkActivate } from './emails/tracked-magic-link-activate.js';
+import { WeeklyProgressDigestEmail } from './emails/weekly-progress-digest.js';
+import { WeekOneCheckinEmail } from './emails/week-one-checkin.js';
+import { WelcomeEmail } from './emails/welcome.js';
 
 // Import validation utilities
 import {
   isPrivateRelayEmail,
   isValidEmailFormat,
   shouldSendEmailTo,
-} from "./utils/email-validation.js";
+} from './utils/email-validation.js';
 import {
   isAnonymousUsername,
   getSafeDisplayName,
-} from "./utils/username-validation.js";
+} from './utils/username-validation.js';
 
 // Export email templates
 export {
@@ -93,4 +93,7 @@ export {
 };
 
 // Export shared components
-export * from "./components/index.js";
+export * from './components/index.js';
+
+// Export i18n utilities (Locale type, normalizeLocale, Intl formatters)
+export * from './i18n/index.js';
