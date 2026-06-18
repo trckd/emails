@@ -38,10 +38,11 @@ const en: WeeklyProgressDigestMessages = {
   volumeChangeUp: (value) => `+${value}% vs last week`,
   volumeChangeDown: (value) => `-${value}% vs last week`,
   volumeChangeSame: 'Same as last week',
-  streakBadge: (formattedDays, days) => {
-    const noun = plural('en', days, { one: 'Day', other: 'Day' });
-    return `${formattedDays} ${noun} Streak!`;
-  },
+  // "Day" is an attributive modifier of "Streak" (cf. "a 5-day streak"), so it
+  // is invariant across counts in English — matching the original copy and the
+  // common app convention (e.g. "5 day streak"). Other locales phrase it as
+  // "streak of N days", where the noun is genuinely pluralized below.
+  streakBadge: (formattedDays) => `${formattedDays} Day Streak!`,
   streakSubtext: 'Keep it going - consistency is key',
   topExercisesTitle: 'Top Exercises This Week',
   cta: 'View Full Report',
