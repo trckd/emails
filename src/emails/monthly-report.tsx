@@ -119,12 +119,16 @@ export const MonthlyReportEmail = ({
   const fmtDecimal = (num: number | null, decimals = 1): string =>
     num === null ? t.notAvailable : formatDecimal(num, locale, decimals);
 
-  const hasBodyweightData = metrics.avgBodyweight || metrics.bodyweightChange;
+  // Use explicit null checks (not truthiness): 0 is a valid value for these
+  // metrics (e.g. bodyweightChange === 0 means "no change"), and `{0 && <X/>}`
+  // would both drop the row and render a stray "0".
+  const hasBodyweightData =
+    metrics.avgBodyweight !== null || metrics.bodyweightChange !== null;
   const hasSessionInsights =
-    metrics.avgReadinessEnergy ||
-    metrics.avgReadinessMood ||
-    metrics.avgSessionSatisfaction ||
-    metrics.avgSessionProgress;
+    metrics.avgReadinessEnergy !== null ||
+    metrics.avgReadinessMood !== null ||
+    metrics.avgSessionSatisfaction !== null ||
+    metrics.avgSessionProgress !== null;
 
   return (
     <EmailLayout preview={t.preview(monthName)}>
@@ -152,7 +156,7 @@ export const MonthlyReportEmail = ({
           change={
             <ChangeIndicator
               value={metrics.avgStepCount}
-              previousValue={previousMetrics?.avgStepCount || null}
+              previousValue={previousMetrics?.avgStepCount ?? null}
             />
           }
         />
@@ -177,7 +181,7 @@ export const MonthlyReportEmail = ({
                   change={
                     <ChangeIndicator
                       value={metrics.avgBodyweight}
-                      previousValue={previousMetrics?.avgBodyweight || null}
+                      previousValue={previousMetrics?.avgBodyweight ?? null}
                     />
                   }
                 />
@@ -215,7 +219,7 @@ export const MonthlyReportEmail = ({
               change={
                 <ChangeIndicator
                   value={metrics.avgSessionsPerWeek}
-                  previousValue={previousMetrics?.avgSessionsPerWeek || null}
+                  previousValue={previousMetrics?.avgSessionsPerWeek ?? null}
                 />
               }
             />
@@ -229,7 +233,7 @@ export const MonthlyReportEmail = ({
               change={
                 <ChangeIndicator
                   value={metrics.totalSessionsTracked}
-                  previousValue={previousMetrics?.totalSessionsTracked || null}
+                  previousValue={previousMetrics?.totalSessionsTracked ?? null}
                 />
               }
             />
@@ -242,7 +246,7 @@ export const MonthlyReportEmail = ({
             change={
               <ChangeIndicator
                 value={metrics.totalSetsTracked}
-                previousValue={previousMetrics?.totalSetsTracked || null}
+                previousValue={previousMetrics?.totalSetsTracked ?? null}
               />
             }
           />
@@ -276,19 +280,19 @@ export const MonthlyReportEmail = ({
           <Section style={{ marginBottom: '24px' }}>
             <SectionHeading>{t.sessionInsights}</SectionHeading>
             <ListBox>
-              {metrics.avgReadinessEnergy && (
+              {metrics.avgReadinessEnergy !== null && (
                 <DataRow
                   label={t.avgReadinessEnergy}
                   value={t.ratingValue(fmtDecimal(metrics.avgReadinessEnergy))}
                 />
               )}
-              {metrics.avgReadinessMood && (
+              {metrics.avgReadinessMood !== null && (
                 <DataRow
                   label={t.avgReadinessMood}
                   value={t.ratingValue(fmtDecimal(metrics.avgReadinessMood))}
                 />
               )}
-              {metrics.avgSessionSatisfaction && (
+              {metrics.avgSessionSatisfaction !== null && (
                 <DataRow
                   label={t.avgSessionSatisfaction}
                   value={t.ratingValue(
@@ -296,7 +300,7 @@ export const MonthlyReportEmail = ({
                   )}
                 />
               )}
-              {metrics.avgSessionProgress && (
+              {metrics.avgSessionProgress !== null && (
                 <DataRow
                   label={t.avgSessionProgress}
                   value={t.ratingValue(fmtDecimal(metrics.avgSessionProgress))}
