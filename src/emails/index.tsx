@@ -1,6 +1,7 @@
 export * from './anniversary.js';
 export * from './app-review-request.js';
 export * from './bodyweight-goal-reached.js';
+export * from './check-in-available.js';
 export * from './client-inactive-alert.js';
 export * from './client-onboarded.js';
 export * from './coach-invite.js';
