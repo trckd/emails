@@ -2,6 +2,7 @@
 import { AnniversaryEmail } from './emails/anniversary.js';
 import { AppReviewRequestEmail } from './emails/app-review-request.js';
 import { BodyweightGoalReachedEmail } from './emails/bodyweight-goal-reached.js';
+import { CheckInAvailableEmail } from './emails/check-in-available.js';
 import { ClientInactiveAlertEmail } from './emails/client-inactive-alert.js';
 import { ClientOnboardedEmail } from './emails/client-onboarded.js';
 import { CoachInviteEmail } from './emails/coach-invite.js';
@@ -50,6 +51,7 @@ export {
   AnniversaryEmail,
   AppReviewRequestEmail,
   BodyweightGoalReachedEmail,
+  CheckInAvailableEmail,
   ClientInactiveAlertEmail,
   ClientOnboardedEmail,
   CoachInviteEmail,
