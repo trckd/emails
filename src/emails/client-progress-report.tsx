@@ -54,21 +54,21 @@ interface ClientProgressReportEmailProps {
 }
 
 export const ClientProgressReportEmail = ({
-  clientName = 'Alex',
-  coachName = 'Coach Sam',
-  periodLabel = 'Jun 22 – Jun 28',
-  workoutsCompleted = 4,
-  totalSets = 62,
-  prCount = 2,
-  prHighlights = ['Bench Press — 225 lbs × 5', 'Squat — 315 lbs × 3'],
-  bodyweightChange = '-2.2 lbs',
-  bodyweightCurrent = '179.8 lbs',
-  nutritionAdherencePct = 75,
-  nutritionDaysLogged = 5,
-  nutritionDaysInPeriod = 7,
-  checkInsCompleted = 1,
-  checkInsAssigned = 1,
-  reportUrl = 'https://app.tracked.gg/v/report/example-token',
+  clientName,
+  coachName,
+  periodLabel,
+  workoutsCompleted,
+  totalSets,
+  prCount,
+  prHighlights,
+  bodyweightChange,
+  bodyweightCurrent,
+  nutritionAdherencePct,
+  nutritionDaysLogged,
+  nutritionDaysInPeriod,
+  checkInsCompleted,
+  checkInsAssigned,
+  reportUrl,
   websiteUrl = 'https://tracked.gg',
   unsubscribeUrl = 'https://tracked.gg/unsubscribe',
   locale = 'en',
@@ -208,5 +208,30 @@ export const ClientProgressReportEmail = ({
     </EmailLayout>
   );
 };
+
+// Sample data for the `email dev` preview server only. This intentionally lives
+// here rather than in the destructuring defaults above: parameter defaults are
+// applied whenever a prop is omitted, which would make `workoutsCompleted`,
+// `bodyweightChange`, `nutritionDaysLogged`, `checkInsAssigned`, etc. never be
+// `undefined` and thus render every section permanently — breaking the
+// documented "omit … to hide the section" behavior. `PreviewProps` is read by
+// the preview server but is not part of a real send.
+ClientProgressReportEmail.PreviewProps = {
+  clientName: 'Alex',
+  coachName: 'Coach Sam',
+  periodLabel: 'Jun 22 – Jun 28',
+  workoutsCompleted: 4,
+  totalSets: 62,
+  prCount: 2,
+  prHighlights: ['Bench Press — 225 lbs × 5', 'Squat — 315 lbs × 3'],
+  bodyweightChange: '-2.2 lbs',
+  bodyweightCurrent: '179.8 lbs',
+  nutritionAdherencePct: 75,
+  nutritionDaysLogged: 5,
+  nutritionDaysInPeriod: 7,
+  checkInsCompleted: 1,
+  checkInsAssigned: 1,
+  reportUrl: 'https://app.tracked.gg/v/report/example-token',
+} satisfies ClientProgressReportEmailProps;
 
 export default ClientProgressReportEmail;
