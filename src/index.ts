@@ -5,6 +5,7 @@ import { BodyweightGoalReachedEmail } from './emails/bodyweight-goal-reached.js'
 import { CheckInAvailableEmail } from './emails/check-in-available.js';
 import { ClientInactiveAlertEmail } from './emails/client-inactive-alert.js';
 import { ClientOnboardedEmail } from './emails/client-onboarded.js';
+import { ClientProgressReportEmail } from './emails/client-progress-report.js';
 import { CoachInviteEmail } from './emails/coach-invite.js';
 import { CoachRemovedClientEmail } from './emails/coach-removed-client.js';
 import { DirectMessageEmail } from './emails/direct-message.js';
@@ -54,6 +55,7 @@ export {
   CheckInAvailableEmail,
   ClientInactiveAlertEmail,
   ClientOnboardedEmail,
+  ClientProgressReportEmail,
   CoachInviteEmail,
   CoachRemovedClientEmail,
   DirectMessageEmail,
