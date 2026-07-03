@@ -4,6 +4,7 @@ export * from './bodyweight-goal-reached.js';
 export * from './check-in-available.js';
 export * from './client-inactive-alert.js';
 export * from './client-onboarded.js';
+export * from './client-progress-report.js';
 export * from './coach-invite.js';
 export * from './coach-removed-client.js';
 export * from './direct-message.js';
