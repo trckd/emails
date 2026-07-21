@@ -86,6 +86,7 @@ interface MetricCardProps {
   label: string;
   value: string | number;
   change?: React.ReactNode;
+  detail?: React.ReactNode;
   size?: 'normal' | 'small';
 }
 
@@ -93,6 +94,7 @@ export const MetricCard = ({
   label,
   value,
   change,
+  detail,
   size = 'normal',
 }: MetricCardProps) => {
   return (
@@ -116,6 +118,7 @@ export const MetricCard = ({
           )}
         </tr>
       </table>
+      {detail && <Text style={metricDetailStyle}>{detail}</Text>}
     </Section>
   );
 };
@@ -146,6 +149,13 @@ const metricValueSmallStyle = {
   fontSize: '20px',
   fontWeight: '700' as const,
   margin: '0',
+};
+
+const metricDetailStyle = {
+  color: colors.textMuted,
+  fontSize: '12px',
+  lineHeight: '18px',
+  margin: `${spacing.xs} 0 0 0`,
 };
 
 // ============================================
