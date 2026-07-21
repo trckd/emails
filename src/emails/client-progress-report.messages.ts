@@ -4,6 +4,8 @@ export interface ClientProgressReportMessages {
   preview: (coachName: string) => string;
   heading: string;
   intro: (clientName: string, coachName: string, periodLabel: string) => string;
+  goalFocusTitle: string;
+  insightsTitle: string;
   labelWorkouts: string;
   labelSets: string;
   labelNewPRs: string;
@@ -25,6 +27,8 @@ const en: ClientProgressReportMessages = {
   heading: 'Your progress report',
   intro: (clientName, coachName, periodLabel) =>
     `Hi ${clientName}, here's your recap from ${coachName} for ${periodLabel}.`,
+  goalFocusTitle: 'Your focus',
+  insightsTitle: 'Progress highlights',
   labelWorkouts: 'Workouts',
   labelSets: 'Sets',
   labelNewPRs: 'New PRs',
@@ -47,6 +51,8 @@ const es: ClientProgressReportMessages = {
   heading: 'Tu informe de progreso',
   intro: (clientName, coachName, periodLabel) =>
     `Hola ${clientName}, aquí tienes tu resumen de ${coachName} para ${periodLabel}.`,
+  goalFocusTitle: 'Tu enfoque',
+  insightsTitle: 'Aspectos destacados',
   labelWorkouts: 'Entrenamientos',
   labelSets: 'Series',
   labelNewPRs: 'Nuevos PRs',
@@ -70,6 +76,8 @@ const fr: ClientProgressReportMessages = {
   heading: 'Ton rapport de progression',
   intro: (clientName, coachName, periodLabel) =>
     `Salut ${clientName}, voici ton récap de ${coachName} pour ${periodLabel}.`,
+  goalFocusTitle: 'Ton objectif',
+  insightsTitle: 'Points forts',
   labelWorkouts: 'Entraînements',
   labelSets: 'Séries',
   labelNewPRs: 'Nouveaux PRs',
@@ -93,6 +101,8 @@ const de: ClientProgressReportMessages = {
   heading: 'Dein Fortschrittsbericht',
   intro: (clientName, coachName, periodLabel) =>
     `Hi ${clientName}, hier ist deine Zusammenfassung von ${coachName} für ${periodLabel}.`,
+  goalFocusTitle: 'Dein Fokus',
+  insightsTitle: 'Fortschritts-Highlights',
   labelWorkouts: 'Workouts',
   labelSets: 'Sätze',
   labelNewPRs: 'Neue PRs',
@@ -116,6 +126,8 @@ const it: ClientProgressReportMessages = {
   heading: 'Il tuo report dei progressi',
   intro: (clientName, coachName, periodLabel) =>
     `Ciao ${clientName}, ecco il tuo riepilogo da ${coachName} per ${periodLabel}.`,
+  goalFocusTitle: 'Il tuo obiettivo',
+  insightsTitle: 'Progressi in evidenza',
   labelWorkouts: 'Allenamenti',
   labelSets: 'Serie',
   labelNewPRs: 'Nuovi PR',
@@ -139,6 +151,8 @@ const pt: ClientProgressReportMessages = {
   heading: 'Seu relatório de progresso',
   intro: (clientName, coachName, periodLabel) =>
     `Olá ${clientName}, aqui está seu resumo de ${coachName} para ${periodLabel}.`,
+  goalFocusTitle: 'Seu foco',
+  insightsTitle: 'Destaques do progresso',
   labelWorkouts: 'Treinos',
   labelSets: 'Séries',
   labelNewPRs: 'Novos PRs',

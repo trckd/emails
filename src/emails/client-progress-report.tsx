@@ -12,12 +12,22 @@ import {
   DataRow,
   MetricCard,
   SmallText,
+  TipBox,
 } from '../components/index.js';
 import type { Locale } from '../i18n/locales.js';
 import { formatNumber } from '../i18n/format.js';
 import { clientProgressReportMessages } from './client-progress-report.messages.js';
 
-interface ClientProgressReportEmailProps {
+export interface ClientProgressReportInsight {
+  /** Caller-localized metric label, e.g. "Average daily steps". */
+  label: string;
+  /** Caller-formatted value, e.g. "8,420" or "7h 35m". */
+  value: string | number;
+  /** Optional caller-localized supporting context. */
+  detail?: string;
+}
+
+export interface ClientProgressReportEmailProps {
   /** Client's first name (or safe display name). */
   clientName: string;
   /** Coach's display or business name. */
@@ -27,6 +37,10 @@ interface ClientProgressReportEmailProps {
    * e.g. "Jun 22 – Jun 28" or "June 2026".
    */
   periodLabel: string;
+  /** Caller-formatted goal or focus shown above the report highlights. */
+  goalTitle?: string;
+  /** Ordered, caller-localized metrics relevant to the client's goal. */
+  insights?: ClientProgressReportInsight[];
   /** Training summary — omit all three to hide the section. */
   workoutsCompleted?: number;
   totalSets?: number;
@@ -57,6 +71,8 @@ export const ClientProgressReportEmail = ({
   clientName,
   coachName,
   periodLabel,
+  goalTitle,
+  insights,
   workoutsCompleted,
   totalSets,
   prCount,
@@ -87,6 +103,58 @@ export const ClientProgressReportEmail = ({
 
       <Heading>{t.heading}</Heading>
       <Paragraph>{t.intro(clientName, coachName, periodLabel)}</Paragraph>
+
+      {goalTitle && (
+        <TipBox title={t.goalFocusTitle} locale={locale}>
+          {goalTitle}
+        </TipBox>
+      )}
+
+      {insights && insights.length > 0 && (
+        <Section style={{ margin: '24px 0' }}>
+          <SectionHeading>{t.insightsTitle}</SectionHeading>
+          {insights.map((insight, index) => {
+            if (index % 2 !== 0) return null;
+
+            const nextInsight = insights[index + 1];
+            return (
+              <Row
+                key={`${insight.label}-${index}`}
+                style={{ marginBottom: '12px' }}
+              >
+                <Column
+                  style={{
+                    width: nextInsight ? '50%' : '100%',
+                    paddingRight: nextInsight ? '6px' : '0',
+                    verticalAlign: 'top',
+                  }}
+                >
+                  <MetricCard
+                    label={insight.label}
+                    value={insight.value}
+                    detail={insight.detail}
+                  />
+                </Column>
+                {nextInsight && (
+                  <Column
+                    style={{
+                      width: '50%',
+                      paddingLeft: '6px',
+                      verticalAlign: 'top',
+                    }}
+                  >
+                    <MetricCard
+                      label={nextInsight.label}
+                      value={nextInsight.value}
+                      detail={nextInsight.detail}
+                    />
+                  </Column>
+                )}
+              </Row>
+            );
+          })}
+        </Section>
+      )}
 
       {hasTraining && (
         <Section style={{ margin: '24px 0' }}>
@@ -220,6 +288,11 @@ ClientProgressReportEmail.PreviewProps = {
   clientName: 'Alex',
   coachName: 'Coach Sam',
   periodLabel: 'Jun 22 – Jun 28',
+  goalTitle: 'Build endurance for a half marathon',
+  insights: [
+    { label: 'Cardio minutes', value: '135', detail: '3 sessions' },
+    { label: 'Average sleep', value: '7h 35m', detail: '6 nights tracked' },
+  ],
   workoutsCompleted: 4,
   totalSets: 62,
   prCount: 2,
