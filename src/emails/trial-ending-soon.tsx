@@ -100,7 +100,7 @@ export const TrialEndingSoonEmail = ({
           : t.introUnconfirmed(userName, trialEndDate)}
       </Paragraph>
 
-      {saved && (
+      {paymentMethod.kind === 'saved' && (
         <>
           <Paragraph>
             {`${chargeLine(t, amountDue, paymentMethod.cardLast4)} ${t.nothingToDo}`}
