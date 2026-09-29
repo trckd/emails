@@ -1,154 +1,229 @@
 import type { Locale } from '../i18n/locales.js';
 
 export interface TrialEndingSoonMessages {
-  preview: (daysRemaining: number) => string;
-  banner: (daysRemaining: number) => string;
-  heading: string;
-  intro: (userName: string, trialEndDate: string) => string;
-  whatHappensTitle: string;
-  whatHappens: string[];
-  ctaBoxTitle: string;
-  ctaBoxBody: string;
-  cta: string;
+  subjectSaved: (trialEndDate: string) => string;
+  subjectUnconfirmed: string;
+  preview: (trialEndDate: string) => string;
+  headingSaved: string;
+  headingUnconfirmed: string;
+  introSaved: (userName: string, trialEndDate: string) => string;
+  introUnconfirmed: (userName: string, trialEndDate: string) => string;
+  chargeAmountCard: (amountDue: string, last4: string) => string;
+  chargeAmount: (amountDue: string) => string;
+  chargeCard: (last4: string) => string;
+  chargeGeneric: string;
+  nothingToDo: string;
+  expectTitle: string;
+  expectContinuity: string;
+  expectPricing: string;
+  expectReceipt: string;
+  expectCancel: (trialEndDate: string) => string;
+  ctaSaved: string;
+  ctaUnconfirmed: string;
   questions: string;
 }
 
 const en: TrialEndingSoonMessages = {
-  preview: (daysRemaining) =>
-    `Only ${daysRemaining} ${daysRemaining === 1 ? 'day' : 'days'} left in your Tracked trial`,
-  banner: (daysRemaining) =>
-    `Your trial ends in ${daysRemaining} ${daysRemaining === 1 ? 'day' : 'days'}`,
-  heading: 'Your Trial is Almost Over',
-  intro: (userName, trialEndDate) =>
-    `Hi ${userName}, your free trial of Tracked ends on ${trialEndDate}. To keep your client data and continue using the coaching dashboard, subscribe before your trial expires.`,
-  whatHappensTitle: 'What happens when your trial ends:',
-  whatHappens: [
-    "You'll lose access to the coaching dashboard",
-    'Your client data will be safely preserved',
-    'Clients will still have access to their workouts',
-    'You can reactivate at any time to regain access',
-  ],
-  ctaBoxTitle: "Don't lose access",
-  ctaBoxBody:
-    'Subscribe now to keep managing your clients without interruption. Pricing starts at just a few dollars per month based on your client count.',
-  cta: 'Subscribe Now',
+  subjectSaved: (date) => `Your Tracked subscription starts on ${date}`,
+  subjectUnconfirmed: 'Your Tracked trial ends soon: check your payment method',
+  preview: (date) => `Your free trial ends on ${date}`,
+  headingSaved: 'Your subscription starts soon',
+  headingUnconfirmed: 'Your free trial ends soon',
+  introSaved: (name, date) =>
+    `Hi ${name}, your free trial of Tracked ends on ${date}, and your subscription will start automatically.`,
+  introUnconfirmed: (name, date) =>
+    `Hi ${name}, your free trial of Tracked ends on ${date}. To keep your coaching dashboard, make sure a payment method is saved on your subscription before then.`,
+  chargeAmountCard: (amount, last4) =>
+    `We'll charge ${amount} to your card ending in ${last4}.`,
+  chargeAmount: (amount) =>
+    `We'll charge ${amount} to your saved payment method.`,
+  chargeCard: (last4) =>
+    `We'll charge your first payment to your card ending in ${last4}.`,
+  chargeGeneric:
+    "We'll charge your first payment to your saved payment method.",
+  nothingToDo:
+    "You don't need to do anything to keep your coaching dashboard and client data.",
+  expectTitle: 'What happens next:',
+  expectContinuity:
+    'Your dashboard, clients and data carry on without interruption',
+  expectPricing: 'Your price is based on your active client count',
+  expectReceipt: "You'll get a receipt by email after each payment",
+  expectCancel: (date) =>
+    `Cancel any time before ${date} and you won't be charged`,
+  ctaSaved: 'Manage subscription',
+  ctaUnconfirmed: 'Check payment method',
   questions:
-    "Have questions about pricing or need more time? Reply to this email or reach out on Discord. We're happy to help.",
+    "Questions about your plan? Reply to this email or reach out on Discord. We're happy to help.",
 };
 
 const es: TrialEndingSoonMessages = {
-  preview: (daysRemaining) =>
-    `Solo ${daysRemaining} ${daysRemaining === 1 ? 'día' : 'días'} para que termine tu prueba gratuita de Tracked`,
-  banner: (daysRemaining) =>
-    `Tu prueba gratuita termina en ${daysRemaining} ${daysRemaining === 1 ? 'día' : 'días'}`,
-  heading: 'Tu prueba gratuita está a punto de terminar',
-  intro: (userName, trialEndDate) =>
-    `Hola ${userName}, tu prueba gratuita de Tracked termina el ${trialEndDate}. Para conservar los datos de tus clientes y seguir usando el panel de coaching, suscríbete antes de que caduque tu prueba gratuita.`,
-  whatHappensTitle: 'Qué ocurre cuando termina tu prueba gratuita:',
-  whatHappens: [
-    'Perderás el acceso al panel de coaching',
-    'Los datos de tus clientes se conservarán de forma segura',
-    'Tus clientes seguirán teniendo acceso a sus entrenamientos',
-    'Puedes reactivar en cualquier momento para recuperar el acceso',
-  ],
-  ctaBoxTitle: 'No pierdas el acceso',
-  ctaBoxBody:
-    'Suscríbete ahora para seguir gestionando a tus clientes sin interrupciones. Los precios empiezan en solo unos pocos dólares al mes según tu número de clientes.',
-  cta: 'Suscribirme ahora',
+  subjectSaved: (date) => `Tu suscripción a Tracked empieza el ${date}`,
+  subjectUnconfirmed:
+    'Tu prueba gratuita de Tracked termina pronto: revisa tu método de pago',
+  preview: (date) => `Tu prueba gratuita termina el ${date}`,
+  headingSaved: 'Tu suscripción empieza pronto',
+  headingUnconfirmed: 'Tu prueba gratuita termina pronto',
+  introSaved: (name, date) =>
+    `Hola ${name}, tu prueba gratuita de Tracked termina el ${date} y tu suscripción empezará automáticamente.`,
+  introUnconfirmed: (name, date) =>
+    `Hola ${name}, tu prueba gratuita de Tracked termina el ${date}. Para conservar tu panel de coaching, asegúrate de tener un método de pago guardado en tu suscripción antes de esa fecha.`,
+  chargeAmountCard: (amount, last4) =>
+    `Cobraremos ${amount} en tu tarjeta terminada en ${last4}.`,
+  chargeAmount: (amount) =>
+    `Cobraremos ${amount} en tu método de pago guardado.`,
+  chargeCard: (last4) =>
+    `Cobraremos tu primer pago en tu tarjeta terminada en ${last4}.`,
+  chargeGeneric: 'Cobraremos tu primer pago en tu método de pago guardado.',
+  nothingToDo:
+    'No tienes que hacer nada para conservar tu panel de coaching y los datos de tus clientes.',
+  expectTitle: 'Qué ocurre a continuación:',
+  expectContinuity:
+    'Tu panel, tus clientes y tus datos siguen funcionando sin interrupciones',
+  expectPricing: 'Tu precio depende de tu número de clientes activos',
+  expectReceipt: 'Recibirás un recibo por correo después de cada pago',
+  expectCancel: (date) =>
+    `Cancela en cualquier momento antes del ${date} y no se te cobrará`,
+  ctaSaved: 'Gestionar suscripción',
+  ctaUnconfirmed: 'Revisar método de pago',
   questions:
-    '¿Tienes preguntas sobre los precios o necesitas más tiempo? Responde a este correo o escríbenos en Discord. Estaremos encantados de ayudarte.',
+    '¿Tienes preguntas sobre tu plan? Responde a este correo o escríbenos en Discord. Estaremos encantados de ayudarte.',
 };
 
 const fr: TrialEndingSoonMessages = {
-  preview: (daysRemaining) =>
-    `Plus que ${daysRemaining} ${daysRemaining <= 1 ? 'jour' : 'jours'} dans ton essai Tracked`,
-  banner: (daysRemaining) =>
-    `Ton essai gratuit se termine dans ${daysRemaining} ${daysRemaining <= 1 ? 'jour' : 'jours'}`,
-  heading: 'Ton essai gratuit est presque terminé',
-  intro: (userName, trialEndDate) =>
-    `Salut ${userName}, ton essai gratuit de Tracked se termine le ${trialEndDate}. Pour conserver les données de tes clients et continuer à utiliser le tableau de bord de coaching, abonne-toi avant la fin de ton essai gratuit.`,
-  whatHappensTitle: 'Ce qui se passe à la fin de ton essai gratuit :',
-  whatHappens: [
-    "Tu perdras l'accès au tableau de bord de coaching",
-    'Les données de tes clients seront conservées en toute sécurité',
-    'Tes clients auront toujours accès à leurs entraînements',
-    "Tu peux réactiver à tout moment pour retrouver l'accès",
-  ],
-  ctaBoxTitle: 'Ne perds pas ton accès',
-  ctaBoxBody:
-    'Abonne-toi maintenant pour continuer à gérer tes clients sans interruption. Les prix démarrent à seulement quelques dollars par mois selon ton nombre de clients.',
-  cta: "S'abonner maintenant",
+  subjectSaved: (date) => `Votre abonnement Tracked commence le ${date}`,
+  subjectUnconfirmed:
+    'Votre essai Tracked se termine bientôt : vérifiez votre moyen de paiement',
+  preview: (date) => `Votre essai gratuit se termine le ${date}`,
+  headingSaved: 'Votre abonnement commence bientôt',
+  headingUnconfirmed: 'Votre essai gratuit se termine bientôt',
+  introSaved: (name, date) =>
+    `Bonjour ${name}, votre essai gratuit de Tracked se termine le ${date} et votre abonnement démarrera automatiquement.`,
+  introUnconfirmed: (name, date) =>
+    `Bonjour ${name}, votre essai gratuit de Tracked se termine le ${date}. Pour conserver votre tableau de bord coaching, assurez-vous qu'un moyen de paiement est enregistré sur votre abonnement avant cette date.`,
+  chargeAmountCard: (amount, last4) =>
+    `Nous débiterons ${amount} sur votre carte se terminant par ${last4}.`,
+  chargeAmount: (amount) =>
+    `Nous débiterons ${amount} sur votre moyen de paiement enregistré.`,
+  chargeCard: (last4) =>
+    `Nous débiterons votre premier paiement sur votre carte se terminant par ${last4}.`,
+  chargeGeneric:
+    'Nous débiterons votre premier paiement sur votre moyen de paiement enregistré.',
+  nothingToDo:
+    "Vous n'avez rien à faire pour conserver votre tableau de bord coaching et les données de vos clients.",
+  expectTitle: 'Et ensuite :',
+  expectContinuity:
+    'Votre tableau de bord, vos clients et vos données continuent sans interruption',
+  expectPricing: 'Votre tarif dépend de votre nombre de clients actifs',
+  expectReceipt: 'Vous recevrez un reçu par e-mail après chaque paiement',
+  expectCancel: (date) =>
+    `Annulez à tout moment avant le ${date} et vous ne serez pas débité`,
+  ctaSaved: "Gérer l'abonnement",
+  ctaUnconfirmed: 'Vérifier le moyen de paiement',
   questions:
-    "Des questions sur les tarifs ou besoin de plus de temps ? Réponds à cet e-mail ou contacte-nous sur Discord. Nous serons ravis de t'aider.",
+    'Des questions sur votre formule ? Répondez à cet e-mail ou contactez-nous sur Discord. Nous serons ravis de vous aider.',
 };
 
 const de: TrialEndingSoonMessages = {
-  preview: (daysRemaining) =>
-    `Nur noch ${daysRemaining} ${daysRemaining === 1 ? 'Tag' : 'Tage'} in deiner Tracked-Testphase`,
-  banner: (daysRemaining) =>
-    `Deine Testphase endet in ${daysRemaining} ${daysRemaining === 1 ? 'Tag' : 'Tagen'}`,
-  heading: 'Deine Testphase ist fast vorbei',
-  intro: (userName, trialEndDate) =>
-    `Hallo ${userName}, deine kostenlose Testphase von Tracked endet am ${trialEndDate}. Um die Daten deiner Klienten zu behalten und das Coaching-Dashboard weiter zu nutzen, abonniere, bevor deine Testphase abläuft.`,
-  whatHappensTitle: 'Was passiert, wenn deine Testphase endet:',
-  whatHappens: [
-    'Du verlierst den Zugriff auf das Coaching-Dashboard',
-    'Die Daten deiner Klienten bleiben sicher erhalten',
-    'Deine Klienten haben weiterhin Zugriff auf ihre Workouts',
-    'Du kannst jederzeit reaktivieren, um den Zugriff zurückzubekommen',
-  ],
-  ctaBoxTitle: 'Verliere nicht deinen Zugriff',
-  ctaBoxBody:
-    'Abonniere jetzt, um deine Klienten ohne Unterbrechung weiter zu verwalten. Die Preise beginnen bei nur wenigen Dollar pro Monat, abhängig von deiner Klientenzahl.',
-  cta: 'Jetzt abonnieren',
+  subjectSaved: (date) => `Dein Tracked-Abo beginnt am ${date}`,
+  subjectUnconfirmed:
+    'Deine Tracked-Testphase endet bald: Prüfe deine Zahlungsmethode',
+  preview: (date) => `Deine kostenlose Testphase endet am ${date}`,
+  headingSaved: 'Dein Abo beginnt bald',
+  headingUnconfirmed: 'Deine kostenlose Testphase endet bald',
+  introSaved: (name, date) =>
+    `Hallo ${name}, deine kostenlose Testphase von Tracked endet am ${date} und dein Abo startet automatisch.`,
+  introUnconfirmed: (name, date) =>
+    `Hallo ${name}, deine kostenlose Testphase von Tracked endet am ${date}. Damit du dein Coaching-Dashboard behältst, hinterlege bis dahin eine Zahlungsmethode für dein Abo.`,
+  chargeAmountCard: (amount, last4) =>
+    `Wir belasten deine Karte mit der Endung ${last4} mit ${amount}.`,
+  chargeAmount: (amount) =>
+    `Wir belasten deine gespeicherte Zahlungsmethode mit ${amount}.`,
+  chargeCard: (last4) =>
+    `Wir belasten deine Karte mit der Endung ${last4} mit deiner ersten Zahlung.`,
+  chargeGeneric:
+    'Wir belasten deine gespeicherte Zahlungsmethode mit deiner ersten Zahlung.',
+  nothingToDo:
+    'Du musst nichts tun, um dein Coaching-Dashboard und die Daten deiner Klienten zu behalten.',
+  expectTitle: 'So geht es weiter:',
+  expectContinuity:
+    'Dein Dashboard, deine Klienten und deine Daten laufen ohne Unterbrechung weiter',
+  expectPricing:
+    'Dein Preis richtet sich nach der Anzahl deiner aktiven Klienten',
+  expectReceipt: 'Nach jeder Zahlung bekommst du eine Quittung per E-Mail',
+  expectCancel: (date) =>
+    `Kündige jederzeit vor dem ${date}, dann wird dir nichts berechnet`,
+  ctaSaved: 'Abo verwalten',
+  ctaUnconfirmed: 'Zahlungsmethode prüfen',
   questions:
-    'Hast du Fragen zu den Preisen oder brauchst du mehr Zeit? Antworte auf diese E-Mail oder melde dich auf Discord. Wir helfen dir gern.',
+    'Fragen zu deinem Plan? Antworte auf diese E-Mail oder melde dich auf Discord. Wir helfen gern.',
 };
 
 const it: TrialEndingSoonMessages = {
-  preview: (daysRemaining) =>
-    `Solo ${daysRemaining} ${daysRemaining === 1 ? 'giorno' : 'giorni'} alla fine della tua prova di Tracked`,
-  banner: (daysRemaining) =>
-    `La tua prova gratuita termina tra ${daysRemaining} ${daysRemaining === 1 ? 'giorno' : 'giorni'}`,
-  heading: 'La tua prova gratuita sta per finire',
-  intro: (userName, trialEndDate) =>
-    `Ciao ${userName}, la tua prova gratuita di Tracked termina il ${trialEndDate}. Per conservare i dati dei tuoi clienti e continuare a usare la dashboard di coaching, abbonati prima che la tua prova gratuita scada.`,
-  whatHappensTitle: 'Cosa succede quando la tua prova gratuita termina:',
-  whatHappens: [
-    "Perderai l'accesso alla dashboard di coaching",
-    'I dati dei tuoi clienti saranno conservati in modo sicuro',
-    'I tuoi clienti avranno comunque accesso ai loro allenamenti',
-    "Puoi riattivare in qualsiasi momento per riottenere l'accesso",
-  ],
-  ctaBoxTitle: "Non perdere l'accesso",
-  ctaBoxBody:
-    'Abbonati ora per continuare a gestire i tuoi clienti senza interruzioni. I prezzi partono da pochi dollari al mese in base al numero dei tuoi clienti.',
-  cta: 'Abbonati ora',
+  subjectSaved: (date) => `Il tuo abbonamento Tracked inizia il ${date}`,
+  subjectUnconfirmed:
+    'La tua prova di Tracked sta per finire: controlla il metodo di pagamento',
+  preview: (date) => `La tua prova gratuita termina il ${date}`,
+  headingSaved: 'Il tuo abbonamento inizia a breve',
+  headingUnconfirmed: 'La tua prova gratuita sta per finire',
+  introSaved: (name, date) =>
+    `Ciao ${name}, la tua prova gratuita di Tracked termina il ${date} e il tuo abbonamento partirà automaticamente.`,
+  introUnconfirmed: (name, date) =>
+    `Ciao ${name}, la tua prova gratuita di Tracked termina il ${date}. Per mantenere la tua dashboard di coaching, assicurati di avere un metodo di pagamento salvato sul tuo abbonamento entro quella data.`,
+  chargeAmountCard: (amount, last4) =>
+    `Addebiteremo ${amount} sulla tua carta che termina con ${last4}.`,
+  chargeAmount: (amount) =>
+    `Addebiteremo ${amount} sul tuo metodo di pagamento salvato.`,
+  chargeCard: (last4) =>
+    `Addebiteremo il primo pagamento sulla tua carta che termina con ${last4}.`,
+  chargeGeneric:
+    'Addebiteremo il primo pagamento sul tuo metodo di pagamento salvato.',
+  nothingToDo:
+    'Non devi fare nulla per mantenere la tua dashboard di coaching e i dati dei tuoi clienti.',
+  expectTitle: 'Cosa succede ora:',
+  expectContinuity:
+    'La tua dashboard, i tuoi clienti e i tuoi dati continuano senza interruzioni',
+  expectPricing: 'Il prezzo dipende dal numero dei tuoi clienti attivi',
+  expectReceipt: 'Riceverai una ricevuta via email dopo ogni pagamento',
+  expectCancel: (date) =>
+    `Annulla in qualsiasi momento prima del ${date} e non ti verrà addebitato nulla`,
+  ctaSaved: 'Gestisci abbonamento',
+  ctaUnconfirmed: 'Controlla metodo di pagamento',
   questions:
-    'Hai domande sui prezzi o ti serve più tempo? Rispondi a questa email o scrivici su Discord. Saremo felici di aiutarti.',
+    'Domande sul tuo piano? Rispondi a questa email o scrivici su Discord. Saremo felici di aiutarti.',
 };
 
 const pt: TrialEndingSoonMessages = {
-  preview: (daysRemaining) =>
-    `Faltam apenas ${daysRemaining} ${daysRemaining === 1 ? 'dia' : 'dias'} no seu teste do Tracked`,
-  banner: (daysRemaining) =>
-    `Seu teste gratuito termina em ${daysRemaining} ${daysRemaining === 1 ? 'dia' : 'dias'}`,
-  heading: 'Seu teste gratuito está quase no fim',
-  intro: (userName, trialEndDate) =>
-    `Olá ${userName}, seu teste gratuito do Tracked termina em ${trialEndDate}. Para manter os dados dos seus clientes e continuar usando o painel de coaching, assine antes que seu teste gratuito expire.`,
-  whatHappensTitle: 'O que acontece quando seu teste gratuito termina:',
-  whatHappens: [
-    'Você perderá o acesso ao painel de coaching',
-    'Os dados dos seus clientes serão preservados com segurança',
-    'Seus clientes continuarão tendo acesso aos treinos deles',
-    'Você pode reativar a qualquer momento para recuperar o acesso',
-  ],
-  ctaBoxTitle: 'Não perca o acesso',
-  ctaBoxBody:
-    'Assine agora para continuar gerenciando seus clientes sem interrupções. Os preços começam em apenas alguns dólares por mês, com base no seu número de clientes.',
-  cta: 'Assinar agora',
+  subjectSaved: (date) => `Sua assinatura do Tracked começa em ${date}`,
+  subjectUnconfirmed:
+    'Seu teste do Tracked termina em breve: confira sua forma de pagamento',
+  preview: (date) => `Seu teste gratuito termina em ${date}`,
+  headingSaved: 'Sua assinatura começa em breve',
+  headingUnconfirmed: 'Seu teste gratuito termina em breve',
+  introSaved: (name, date) =>
+    `Olá ${name}, seu teste gratuito do Tracked termina em ${date} e sua assinatura começará automaticamente.`,
+  introUnconfirmed: (name, date) =>
+    `Olá ${name}, seu teste gratuito do Tracked termina em ${date}. Para manter seu painel de coaching, garanta que haja uma forma de pagamento salva na sua assinatura até essa data.`,
+  chargeAmountCard: (amount, last4) =>
+    `Vamos cobrar ${amount} no seu cartão com final ${last4}.`,
+  chargeAmount: (amount) =>
+    `Vamos cobrar ${amount} na sua forma de pagamento salva.`,
+  chargeCard: (last4) =>
+    `Vamos cobrar seu primeiro pagamento no seu cartão com final ${last4}.`,
+  chargeGeneric:
+    'Vamos cobrar seu primeiro pagamento na sua forma de pagamento salva.',
+  nothingToDo:
+    'Você não precisa fazer nada para manter seu painel de coaching e os dados dos seus clientes.',
+  expectTitle: 'O que acontece agora:',
+  expectContinuity:
+    'Seu painel, seus clientes e seus dados continuam sem interrupção',
+  expectPricing: 'Seu preço depende do número de clientes ativos',
+  expectReceipt: 'Você receberá um recibo por e-mail após cada pagamento',
+  expectCancel: (date) =>
+    `Cancele a qualquer momento antes de ${date} e você não será cobrado`,
+  ctaSaved: 'Gerenciar assinatura',
+  ctaUnconfirmed: 'Conferir forma de pagamento',
   questions:
-    'Tem dúvidas sobre os preços ou precisa de mais tempo? Responda a este e-mail ou fale com a gente no Discord. Teremos prazer em ajudar.',
+    'Dúvidas sobre seu plano? Responda a este e-mail ou fale com a gente no Discord. Teremos prazer em ajudar.',
 };
 
 export const trialEndingSoonMessages: Record<Locale, TrialEndingSoonMessages> =
