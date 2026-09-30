@@ -24,7 +24,10 @@ import { PaymentFinalNoticeEmail } from './emails/payment-final-notice.js';
 import { SubscriptionCanceledEmail } from './emails/subscription-canceled.js';
 import { SupportEmail } from './emails/support-email.js';
 import { TrialConvertedEmail } from './emails/trial-converted.js';
-import { TrialEndingSoonEmail } from './emails/trial-ending-soon.js';
+import {
+  TrialEndingSoonEmail,
+  trialEndingSoonSubject,
+} from './emails/trial-ending-soon.js';
 import { TrialExpiredEmail } from './emails/trial-expired.js';
 import { TrialMidpointEmail } from './emails/trial-midpoint.js';
 import { TrialStartedEmail } from './emails/trial-started.js';
@@ -86,6 +89,12 @@ export {
   WeekOneCheckinEmail,
   WelcomeEmail,
 };
+
+export { trialEndingSoonSubject };
+export type {
+  TrialEndingSoonEmailProps,
+  TrialEndingSoonPaymentMethod,
+} from './emails/trial-ending-soon.js';
 
 // Export validation utilities
 export {
